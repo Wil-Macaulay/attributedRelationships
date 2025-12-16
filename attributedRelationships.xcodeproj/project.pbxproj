@@ -15,16 +15,28 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				modelObjects/attributedRelationships.xcdatamodeld,
 			);
 			target = 3BDD4F9E2EEDDE9500F58346 /* attributedRelationships */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		3BDD501E2EEF6BDB00F58346 /* Exceptions for "attributedRelationships" folder in "Compile Sources" phase from "attributedRelationships" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 3BDD4F9B2EEDDE9500F58346 /* Sources */;
+			membershipExceptions = (
+				modelObjects/attributedRelationships.xcdatamodeld,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3BDD4FA12EEDDE9500F58346 /* attributedRelationships */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				3BDD4FB42EEDDE9700F58346 /* Exceptions for "attributedRelationships" folder in "attributedRelationships" target */,
+				3BDD501E2EEF6BDB00F58346 /* Exceptions for "attributedRelationships" folder in "Compile Sources" phase from "attributedRelationships" target */,
 			);
 			path = attributedRelationships;
 			sourceTree = "<group>";
@@ -148,11 +160,13 @@
 				DEVELOPMENT_TEAM = XK3GWEQN88;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = attributedRelationships/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Attrib;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -180,11 +194,13 @@
 				DEVELOPMENT_TEAM = XK3GWEQN88;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = attributedRelationships/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Attrib;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

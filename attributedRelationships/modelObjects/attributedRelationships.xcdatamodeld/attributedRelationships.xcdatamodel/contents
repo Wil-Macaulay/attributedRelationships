@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24411" systemVersion="24G325" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="TDMCollection" representedClassName="TDMCollection" syncable="YES">
+        <attribute name="createdDateTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="displayName" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDateTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TDMSearchable" inverseName="collections" inverseEntity="TDMSearchable"/>
+    </entity>
+    <entity name="TDMSearchable" representedClassName="TDMSearchable" syncable="YES">
+        <attribute name="collatingName" optional="YES" attributeType="String"/>
+        <attribute name="createdDateTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="displayName" optional="YES" attributeType="String"/>
+        <attribute name="isFavourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="modifiedDateTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="collections" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TDMCollection" inverseName="items" inverseEntity="TDMCollection"/>
+    </entity>
+    <entity name="TDMTune" representedClassName="TDMTune" parentEntity="TDMSearchable" syncable="YES">
+        <relationship name="tuneSets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TDMTuneSet" inverseName="tunes" inverseEntity="TDMTuneSet"/>
+    </entity>
+    <entity name="TDMTuneSet" representedClassName="TDMTuneSet" parentEntity="TDMSearchable" syncable="YES">
+        <relationship name="tunes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TDMTune" inverseName="tuneSets" inverseEntity="TDMTune"/>
+    </entity>
+</model>

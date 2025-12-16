@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        makeTestData()
         return true
     }
 
@@ -75,6 +76,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    // MARK: - test data support
+    
+    func clearTestData () {
+        
+    }
+    
+    func makeTestData () {
+        let context = persistentContainer.viewContext
+        let test1 = TDMTune.makeInstance(context: context, displayName: "first test tune", notes: "no notes")
+        let test2 = TDMTune.makeInstance(context: context, displayName: "second test tune", notes: "some notes")
+        let test3 = TDMTune.makeInstance(context: context, displayName: "third test tune", notes: "some more notes")
+
+        let testSet = TDMTuneSet.makeInstance(context: context, displayName: "first test set", notes: "test set notes") as! TDMTuneSet
+        let testSet2 = TDMTuneSet.makeInstance(context: context, displayName: "second test set", notes: "test set 2 notes") as! TDMTuneSet
+        testSet.tunes = [test3,test2, test1]
+        testSet2.tunes = [test1, test2]
+        
+        let collection1 = TDMCollection.makeInstance(context: context, displayName: "myCollection")
+        collection1.items = [test1,testSet2]
+        //saveContext()
+            
+        
+    }
+    
+    class var sharedDelegate :  AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate as AppDelegate
     }
 
 }
