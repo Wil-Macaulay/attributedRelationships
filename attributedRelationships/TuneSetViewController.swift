@@ -6,6 +6,7 @@
 //
 
 import UIKit
+internal import CoreData
 
 class TuneSetViewController: UIViewController {
 
@@ -16,7 +17,8 @@ class TuneSetViewController: UIViewController {
     @IBOutlet weak var tunesStackView: UIStackView!
     
     var detailItem : TDMTuneSet? = nil
-
+    lazy var context  = AppDelegate.sharedDelegate.persistentContainer.viewContext
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,8 +26,28 @@ class TuneSetViewController: UIViewController {
         lockFields()
         navigationItem.rightBarButtonItem = editButtonItem
         navigationItem.leftItemsSupplementBackButton = true;
+        let addAction = UIAction{_ in
+            self.pickItem()
+        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: addAction)
 
     }
+    
+    func pickItem(){
+        
+        let item = TDMTune.makeInstance(context: context , displayName: "<new Tune in set \(detailItem?.displayName ?? "untitled")>") as! TDMTune
+        detailItem?.addToTunes(item)
+        detailItem?.modifiedDateTime = Date()
+
+        do {
+            try context.save()
+        } catch {
+            print("can't save")
+        }
+        self.updateFields()
+        
+    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,6 +56,8 @@ class TuneSetViewController: UIViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        navigationItem.leftBarButtonItem?.isHidden = !editing
+
         if editing {
             unlockFields()
         } else {
@@ -91,6 +115,12 @@ class TuneSetViewController: UIViewController {
         detailItem?.displayName = displayNameField.text
         detailItem?.notes = notesField.text
         detailItem?.modifiedDateTime = Date()
+        do {
+            try context.save()
+        } catch {
+            print("can't save")
+        }
+
     }
 
 

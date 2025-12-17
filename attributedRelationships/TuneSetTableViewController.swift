@@ -39,9 +39,25 @@ class TuneSetTableViewController: UITableViewController, NSFetchedResultsControl
             navigationController.title = title
         }
         
-        self.tableView.register(UITableViewCell.self , forCellReuseIdentifier: "reuseIdentifier")
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        let addAction = UIAction{_ in
+            if let context = self.fetchedResultController?.managedObjectContext{
+                _ = TDMTuneSet.makeInstance(context: context , displayName: "<new TuneSet>")
+                do {
+                    try context.save()
+                } catch {
+                    print("can't save")
+                }
+            }
+            
+        }
+ 
+        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.leftItemsSupplementBackButton = true;
+        navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: addAction)
+
+        tableView.register(UITableViewCell.self , forCellReuseIdentifier: "reuseIdentifier")
+        tableView.delegate = self
+        tableView.dataSource = self
         _ = makeFetchedResultController()
         
         do {
@@ -94,49 +110,38 @@ class TuneSetTableViewController: UITableViewController, NSFetchedResultsControl
         detail.detailItem = item
         showDetailViewController(detail, sender: self)
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
     }
-    */
 
-    /*
+   
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            // delete the object
+            let item = (fetchedResultController?.object(at: indexPath))!
+            if let context = fetchedResultController?.managedObjectContext {
+                context.delete(item)
+                do {
+                    try context.save()
+                } catch {
+                    print("can't save")
+                }
+            }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    
+    //MARK: - fetchedResultsController delegate
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
+        tableView.reloadData()
     }
-    */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

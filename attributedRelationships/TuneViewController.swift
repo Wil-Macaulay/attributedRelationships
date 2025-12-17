@@ -6,6 +6,7 @@
 //
 
 import UIKit
+internal import CoreData
 
 
 class TuneViewController: UIViewController {
@@ -16,6 +17,7 @@ class TuneViewController: UIViewController {
     @IBOutlet weak var modifiedField: UITextField!
     
     var detailItem : TDMTune? = nil
+    lazy var context  = AppDelegate.sharedDelegate.persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +69,7 @@ class TuneViewController: UIViewController {
             notesField.text = detailItem.notes
             createdField.text = detailItem.createdDateTime?.formatted()
             modifiedField.text = detailItem.modifiedDateTime?.formatted()
+
         }
     }
     
@@ -74,6 +77,12 @@ class TuneViewController: UIViewController {
         detailItem?.displayName = displayNameField.text
         detailItem?.notes = notesField.text
         detailItem?.modifiedDateTime = Date()
+        do {
+            try context.save()
+        } catch {
+            print("can't save")
+        }
+
     }
     
     

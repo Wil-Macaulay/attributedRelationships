@@ -80,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - test data support
     
+    // remove the persistent store
     func clearTestData () {
         
     }
@@ -97,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let collection1 = TDMCollection.makeInstance(context: context, displayName: "myCollection")
         collection1.items = [test1,testSet2]
-        //saveContext()
+        saveContext()
             
         
     }

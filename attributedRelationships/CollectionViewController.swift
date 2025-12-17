@@ -11,6 +11,7 @@ import CoreData
 class CollectionViewController: UITableViewController {
     
     var detailItem : TDMCollection? = nil
+    lazy var context = AppDelegate.sharedDelegate.persistentContainer.viewContext
 
     override func viewDidLoad() {
         print("CollectionViewController: ViewDidLoad ")
@@ -19,18 +20,45 @@ class CollectionViewController: UITableViewController {
         if let navigationController {
             navigationController.title = title
         }
-        
+        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.leftItemsSupplementBackButton = true;
+        let addAction = UIAction{_ in
+            self.pickItem()
+        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: addAction)
+        navigationItem.leftBarButtonItem?.isHidden = true
+
+
+
         self.tableView.register(UITableViewCell.self , forCellReuseIdentifier: "reuseIdentifier")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-
+        let tableTitleField = UITextField()
+        tableTitleField.text = "333"
+        tableView.tableHeaderView = tableTitleField
+ 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    func pickItem(){
+        
+        let item = TDMTune.makeInstance(context: context , displayName: "<new Tune in Collection>")
+        detailItem?.addToItems(item)
+        detailItem?.modifiedDateTime = Date()
+        do {
+            try context.save()
+        } catch {
+            print("can't save")
+        }
+        tableView.reloadData()
+        
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,6 +67,13 @@ class CollectionViewController: UITableViewController {
             title = detailItem.displayName
             
         }
+    }
+    
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        navigationItem.leftBarButtonItem?.isHidden = !editing
+
     }
 
     // MARK: - Table view data source
@@ -111,24 +146,40 @@ class CollectionViewController: UITableViewController {
     }
     */
 
-    /*
+ 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            if let detailItem {
+                detailItem.removeFromItems(at: indexPath.row)
+                detailItem.modifiedDateTime = Date()
+                let context = AppDelegate.sharedDelegate.persistentContainer.viewContext
+                do {
+                    try context.save()
+                } catch {
+                    print("can't save")
+                }
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    */
+    
 
-    /*
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+        if let detailItem,
+           let item =  detailItem.items?.object(at: fromIndexPath.row) as? TDMSearchable {
+            detailItem.removeFromItems(at: fromIndexPath.row)
+            detailItem.insertIntoItems(item, at: to.row)
+            tableView.reloadData()
+        }
 
     }
-    */
+    
 
     /*
     // Override to support conditional rearranging of the table view.
