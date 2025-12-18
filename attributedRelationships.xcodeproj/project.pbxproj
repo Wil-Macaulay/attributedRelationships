@@ -15,28 +15,16 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				modelObjects/attributedRelationships.xcdatamodeld,
 			);
 			target = 3BDD4F9E2EEDDE9500F58346 /* attributedRelationships */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		3BDD501E2EEF6BDB00F58346 /* Exceptions for "attributedRelationships" folder in "Compile Sources" phase from "attributedRelationships" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 3BDD4F9B2EEDDE9500F58346 /* Sources */;
-			membershipExceptions = (
-				modelObjects/attributedRelationships.xcdatamodeld,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3BDD4FA12EEDDE9500F58346 /* attributedRelationships */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				3BDD4FB42EEDDE9700F58346 /* Exceptions for "attributedRelationships" folder in "attributedRelationships" target */,
-				3BDD501E2EEF6BDB00F58346 /* Exceptions for "attributedRelationships" folder in "Compile Sources" phase from "attributedRelationships" target */,
 			);
 			path = attributedRelationships;
 			sourceTree = "<group>";

@@ -8,7 +8,8 @@
 import UIKit
 import CoreData
 
-class CollectionViewController: UITableViewController {
+class CollectionViewController: UITableViewController, ItemChooserDelegate {
+    var chooser : ItemChooserTableViewController? = nil
     
     var detailItem : TDMCollection? = nil
     lazy var context = AppDelegate.sharedDelegate.persistentContainer.viewContext
@@ -47,17 +48,13 @@ class CollectionViewController: UITableViewController {
     
     func pickItem(){
         
-        let item = TDMTune.makeInstance(context: context , displayName: "<new Tune in Collection>")
-        detailItem?.addToItems(item)
-        detailItem?.modifiedDateTime = Date()
-        do {
-            try context.save()
-        } catch {
-            print("can't save")
-        }
-        tableView.reloadData()
+        chooser = ItemChooserTableViewController()
+        chooser?.delegate = self
+        present(chooser!, animated: true)
         
     }
+    
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -180,23 +177,27 @@ class CollectionViewController: UITableViewController {
 
     }
     
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    //MARK: - chooser protocol
+    
+    func didSelect(_ item: TDMSearchable) {
+        print("item selected from chooser")
+        
+        detailItem?.addToItems(item)
+        detailItem?.modifiedDateTime = Date()
+        do {
+            try context.save()
+        } catch {
+            print("can't save")
+        }
+        self.tableView.reloadData()
+        dismiss(animated: true)
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func didCancel() {
+        print("chooser canceled")
+        dismiss(animated: true)
     }
-    */
+    
+
 
 }

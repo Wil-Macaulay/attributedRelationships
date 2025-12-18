@@ -1,16 +1,20 @@
 //
-//  TuneTableViewController.swift
+//  ItemChooserTableViewController.swift
 //  attributedRelationships
 //
-//  Created by wil macaulay on 2025-12-14.
+//  Created by wil macaulay on 2025-12-18.
 //
 
 import UIKit
 internal import CoreData
 
-class TuneTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class ItemChooserTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     lazy var fetchedResultController : NSFetchedResultsController<TDMSearchable>? = makeFetchedResultController()
+    
+    var selectedItem : TDMSearchable? = nil
+    
+    var delegate : ItemChooserDelegate? = nil
     
     func makeFetchedResultController()->NSFetchedResultsController<TDMSearchable>?{
         let context = AppDelegate.sharedDelegate.persistentContainer.viewContext
@@ -33,40 +37,35 @@ class TuneTableViewController: UITableViewController, NSFetchedResultsController
     }
 
     override func viewDidLoad() {
-        print("TuneTableViewController: ViewDidLoad ")
-        title = "Tunes Library"
+        print("ItemPicker: ViewDidLoad ")
+        title = "Choose an item"
         super.viewDidLoad()
         if let navigationController {
             navigationController.title = title
         }
-        let addAction = UIAction{_ in
-            if let context = self.fetchedResultController?.managedObjectContext{
-                _ = TDMTune.makeInstance(context: context , displayName: "<new Tune>")
-                do {
-                    try context.save()
-                } catch {
-                    print("can't save")
-                }
-            }
-            
-        }
         
-        navigationItem.rightBarButtonItem = editButtonItem
-        navigationItem.leftItemsSupplementBackButton = true;
-        navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: addAction)
+        let doneAction = UIAction {_ in
+            if let delegate = self.delegate {
+                delegate.didCancel()
+            } else {
+                self.dismiss(animated: true)
+            }
+        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .done, primaryAction: doneAction)
 
         tableView.register(UITableViewCell.self , forCellReuseIdentifier: "reuseIdentifier")
         tableView.delegate = self
         tableView.dataSource = self
 
-        _ = makeFetchedResultController()
+         _ = makeFetchedResultController()
         
         do {
             try fetchedResultController?.performFetch()
         } catch {
             fatalError("couldn't fetch")
         }
-        
+    
+
     }
 
     // MARK: - Table view data source
@@ -79,7 +78,6 @@ class TuneTableViewController: UITableViewController, NSFetchedResultsController
         guard let sectionInfo = fetchedResultController?.sections?[section] else {
              return 0
          }
-         
          return sectionInfo.numberOfObjects
      }
 
@@ -96,15 +94,11 @@ class TuneTableViewController: UITableViewController, NSFetchedResultsController
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = fetchedResultController?.object(at: indexPath)
-        if let item = item as? TDMTune {
-            showTuneVC(item: item)
-        } else {
-            if let item = item as? TDMTuneSet {
-                showTuneSetVC(item: item)
-            }
+        selectedItem = fetchedResultController?.object(at: indexPath)
+        if let delegate,
+        let selectedItem {
+            delegate.didSelect(selectedItem)
         }
-                                
     }
     
     func showTuneSetVC(item : TDMTuneSet){
@@ -122,33 +116,7 @@ class TuneTableViewController: UITableViewController, NSFetchedResultsController
         showDetailViewController(detail, sender: self)
 
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // delete the object
-            let item = (fetchedResultController?.object(at: indexPath))!
-            if let context = fetchedResultController?.managedObjectContext {
-                context.delete(item)
-                do {
-                    try context.save()
-                } catch {
-                    print("can't save")
-                }
-            }
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
- 
-    
+     
 
      //MARK: - fetchedResultsController delegate
      
@@ -156,4 +124,10 @@ class TuneTableViewController: UITableViewController, NSFetchedResultsController
          tableView.reloadData()
      }
 
+}
+
+protocol ItemChooserDelegate {
+    func didSelect(_ item: TDMSearchable)
+    
+    func didCancel()
 }

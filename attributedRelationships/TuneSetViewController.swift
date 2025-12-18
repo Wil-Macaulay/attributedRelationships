@@ -8,7 +8,7 @@
 import UIKit
 internal import CoreData
 
-class TuneSetViewController: UIViewController {
+class TuneSetViewController: UIViewController, ItemChooserDelegate {
 
     @IBOutlet weak var displayNameField: UITextField!
     @IBOutlet weak var notesField: UITextField!
@@ -35,17 +35,10 @@ class TuneSetViewController: UIViewController {
     
     func pickItem(){
         
-        let item = TDMTune.makeInstance(context: context , displayName: "<new Tune in set \(detailItem?.displayName ?? "untitled")>") as! TDMTune
-        detailItem?.addToTunes(item)
-        detailItem?.modifiedDateTime = Date()
+        let chooser = ItemChooserTableViewController()
+        chooser.delegate = self
+        present(chooser, animated: true)
 
-        do {
-            try context.save()
-        } catch {
-            print("can't save")
-        }
-        self.updateFields()
-        
     }
 
     
@@ -122,6 +115,29 @@ class TuneSetViewController: UIViewController {
         }
 
     }
+    
+    //MARK: - chooser protocol
+    
+    func didSelect(_ item: TDMSearchable) {
+        print("item selected from chooser")
+        if let item = item as? TDMTune {
+            detailItem?.addToTunes(item)
+            detailItem?.modifiedDateTime = Date()
+            do {
+                try context.save()
+            } catch {
+                print("can't save")
+            }
+            updateFields()
+        }
+        dismiss(animated: true)
+    }
+    
+    func didCancel() {
+        print("chooser canceled")
+        dismiss(animated: true)
+    }
+
 
 
 }
