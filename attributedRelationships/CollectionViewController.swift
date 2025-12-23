@@ -11,6 +11,8 @@ import CoreData
 class CollectionViewController: UITableViewController, ItemChooserDelegate {
     var chooser : ItemChooserTableViewController? = nil
     
+    @IBOutlet weak var tableHeader: TableHeaderView!
+    
     var detailItem : TDMCollection? = nil
     lazy var context = AppDelegate.sharedDelegate.persistentContainer.viewContext
 
@@ -35,15 +37,10 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        let tableTitleField = UITextField()
-        tableTitleField.text = "333"
-        tableView.tableHeaderView = tableTitleField
- 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        tableView.tableHeaderView = tableHeader
+        tableHeader.adjustConstraints()
+        tableHeader.lockFields()
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     func pickItem(){
@@ -59,18 +56,44 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let detailItem {
-            title = detailItem.displayName
-            
-        }
+            updateFields()
+                    
     }
     
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         navigationItem.leftBarButtonItem?.isHidden = !editing
+        if (editing) {
+            tableHeader.unlockFields()
+        } else {
+            updateItem()
+            tableHeader.lockFields()
+            updateFields()
+            do {
+                try context.save()
+            } catch {
+                print("can't save")
+            }
+            tableHeader.lockFields()
+        }
 
+    }
+    
+    func updateItem() {
+        if let detailItem {
+            detailItem.displayName = tableHeader.displayNameField.text
+            detailItem.modifiedDateTime = Date()
+        }
+    }
+    
+    // MARK: - Table header
+    
+    func updateFields () {
+        if let detailItem  {
+            tableHeader.updateFields(displayName: detailItem.displayName, createdDate: detailItem.createdDateTime, modifiedDate: detailItem.modifiedDateTime)
+            title = detailItem.displayName
+       }
     }
 
     // MARK: - Table view data source
@@ -134,14 +157,6 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
         showDetailViewController(detail, sender: self)
 
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
  
     // Override to support editing the table view.

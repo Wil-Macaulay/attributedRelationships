@@ -99,7 +99,8 @@ class CollectionsTableViewController: UITableViewController, NSFetchedResultsCon
     // MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = (fetchedResultController?.object(at: indexPath))!
-        let collectionVC = CollectionViewController()
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let collectionVC = mainStoryboard.instantiateViewController(withIdentifier: "CollectionViewController") as! CollectionViewController
         collectionVC.detailItem = item
         showDetailViewController(collectionVC, sender: self)
  

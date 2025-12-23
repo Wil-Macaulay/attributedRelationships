@@ -78,7 +78,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             },
 
             UITab(title:"Tools", image: UIImage(systemName: "gearshape"), identifier: "tabs.tools"){ tab in
-                self.tabVC(tab: tab)
+                self.toolsVC(tab: tab)
             },
 
         ]
@@ -87,8 +87,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     }
     
-    func tabVC(tab: UITab) -> UIViewController{
-        print("tabVC for tab \(tab)")
+    func toolsVC(tab: UITab) -> UIViewController{
+        print("toolsVC for tab \(tab)")
         let title = tab.identifier
         let leafVC = LeafViewController()
         leafVC.title = title
