@@ -6,7 +6,18 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		3B2F4C2C2F0202B400C6A975 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3BDD4F972EEDDE9500F58346 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3BDD4F9E2EEDDE9500F58346;
+			remoteInfo = attributedRelationships;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		3B2F4C282F0202B400C6A975 /* attributedRelationshipsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = attributedRelationshipsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BDD4F9F2EEDDE9500F58346 /* attributedRelationships.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = attributedRelationships.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -21,6 +32,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3B2F4C292F0202B400C6A975 /* attributedRelationshipsTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = attributedRelationshipsTests;
+			sourceTree = "<group>";
+		};
 		3BDD4FA12EEDDE9500F58346 /* attributedRelationships */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -32,6 +48,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3B2F4C252F0202B400C6A975 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3BDD4F9C2EEDDE9500F58346 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -46,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				3BDD4FA12EEDDE9500F58346 /* attributedRelationships */,
+				3B2F4C292F0202B400C6A975 /* attributedRelationshipsTests */,
 				3BDD4FA02EEDDE9500F58346 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				3BDD4F9F2EEDDE9500F58346 /* attributedRelationships.app */,
+				3B2F4C282F0202B400C6A975 /* attributedRelationshipsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,6 +86,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3B2F4C272F0202B400C6A975 /* attributedRelationshipsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B2F4C2E2F0202B400C6A975 /* Build configuration list for PBXNativeTarget "attributedRelationshipsTests" */;
+			buildPhases = (
+				3B2F4C242F0202B400C6A975 /* Sources */,
+				3B2F4C252F0202B400C6A975 /* Frameworks */,
+				3B2F4C262F0202B400C6A975 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3B2F4C2D2F0202B400C6A975 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3B2F4C292F0202B400C6A975 /* attributedRelationshipsTests */,
+			);
+			name = attributedRelationshipsTests;
+			packageProductDependencies = (
+			);
+			productName = attributedRelationshipsTests;
+			productReference = 3B2F4C282F0202B400C6A975 /* attributedRelationshipsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		3BDD4F9E2EEDDE9500F58346 /* attributedRelationships */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3BDD4FB52EEDDE9700F58346 /* Build configuration list for PBXNativeTarget "attributedRelationships" */;
@@ -93,6 +141,10 @@
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					3B2F4C272F0202B400C6A975 = {
+						CreatedOnToolsVersion = 26.1;
+						TestTargetID = 3BDD4F9E2EEDDE9500F58346;
+					};
 					3BDD4F9E2EEDDE9500F58346 = {
 						CreatedOnToolsVersion = 26.1;
 					};
@@ -113,11 +165,19 @@
 			projectRoot = "";
 			targets = (
 				3BDD4F9E2EEDDE9500F58346 /* attributedRelationships */,
+				3B2F4C272F0202B400C6A975 /* attributedRelationshipsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3B2F4C262F0202B400C6A975 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3BDD4F9D2EEDDE9500F58346 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +188,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3B2F4C242F0202B400C6A975 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3BDD4F9B2EEDDE9500F58346 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,7 +204,59 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3B2F4C2D2F0202B400C6A975 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3BDD4F9E2EEDDE9500F58346 /* attributedRelationships */;
+			targetProxy = 3B2F4C2C2F0202B400C6A975 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		3B2F4C2F2F0202B400C6A975 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XK3GWEQN88;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.celticmusic.attributedRelationshipsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/attributedRelationships.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/attributedRelationships";
+			};
+			name = Debug;
+		};
+		3B2F4C302F0202B400C6A975 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XK3GWEQN88;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.celticmusic.attributedRelationshipsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/attributedRelationships.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/attributedRelationships";
+			};
+			name = Release;
+		};
 		3BDD4FB62EEDDE9700F58346 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -330,6 +449,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3B2F4C2E2F0202B400C6A975 /* Build configuration list for PBXNativeTarget "attributedRelationshipsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B2F4C2F2F0202B400C6A975 /* Debug */,
+				3B2F4C302F0202B400C6A975 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3BDD4F9A2EEDDE9500F58346 /* Build configuration list for PBXProject "attributedRelationships" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

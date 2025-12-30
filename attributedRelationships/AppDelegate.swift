@@ -34,16 +34,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Core Data stack
+    
+    private var _container : NSPersistentContainer? = nil
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    var persistentContainerForProd: NSPersistentContainer {
+        if let _container {
+            return _container
+        }
         /*
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
         */
-        let container = NSPersistentContainer(name: "attributedRelationships")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        _container = NSPersistentContainer(name: "attributedRelationships")
+        _container?.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -59,8 +64,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        return container
-    }()
+        return _container!
+    }
+    
+    lazy var persistentContainer : NSPersistentContainer = {
+        let description = NSPersistentStoreDescription()
+         description.url = URL(fileURLWithPath: "/dev/null")
+         let container = NSPersistentContainer(name: "attributedRelationships")
+         container.persistentStoreDescriptions = [description]
+         container.loadPersistentStores { _, error in
+             if let error = error as NSError? {
+                 fatalError("Unresolved error \(error), \(error.userInfo)")
+             }
+         }
+         return container
+     }()
+        
+
 
     // MARK: - Core Data Saving support
 
@@ -81,8 +101,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - test data support
     
     // remove the persistent store
-    func clearTestData () {
-        
+    func resetDatabase () throws {
+        let coordinator = persistentContainer.persistentStoreCoordinator
+        for store in coordinator.persistentStores {
+            if let url = store.url {
+                do {
+                    try coordinator.destroyPersistentStore(at: url, type: .sqlite)
+                }
+            }
+        }
+        _container = nil
     }
     
     func makeTestData () {
