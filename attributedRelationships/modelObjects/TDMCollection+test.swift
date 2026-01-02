@@ -18,5 +18,13 @@ extension TDMCollection {
         return newInstance
     }
     
-
+    // we might have multiple collections with the same name when we are reconciling.
+    class func fetchByName(name: String, context : NSManagedObjectContext)throws ->([TDMCollection],Int) {
+        let fetchRequest : NSFetchRequest<TDMCollection> = fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "displayName == %@", name )
+        do {
+            let result = try context.fetch(fetchRequest)
+            return try (result,context.count(for: fetchRequest))
+        }
+    }
 }

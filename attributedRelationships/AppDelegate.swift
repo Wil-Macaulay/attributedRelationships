@@ -10,6 +10,8 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var unitTesting = false
 
 
 
@@ -67,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return _container!
     }
     
-    lazy var persistentContainer : NSPersistentContainer = {
+    lazy var persistentContainerForUnitTest : NSPersistentContainer = {
         let description = NSPersistentStoreDescription()
          description.url = URL(fileURLWithPath: "/dev/null")
          let container = NSPersistentContainer(name: "attributedRelationships")
@@ -79,7 +81,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          }
          return container
      }()
-        
+     
+    var persistentContainer : NSPersistentContainer {
+        if unitTesting {
+            return persistentContainerForUnitTest
+        } else {
+            return persistentContainerForProd
+        }
+    }
 
 
     // MARK: - Core Data Saving support

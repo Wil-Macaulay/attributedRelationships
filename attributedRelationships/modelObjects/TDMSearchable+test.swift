@@ -24,4 +24,7 @@ extension TDMSearchable {
     class func collatingName(displayName:String?) -> String?{
         return displayName
     }
+    
+
 }
+

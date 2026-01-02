@@ -18,7 +18,7 @@ struct attributedRelationshipsTests {
     }
     
     //this is disabled because I'm using the "/dev/null" technique in appDelegate
-    @Test(.disabled())
+    @Test("reset",.disabled())
     func resetDatabase() throws {
         try appDelegate.resetDatabase()
         let context = appDelegate.persistentContainer.viewContext
@@ -34,61 +34,87 @@ struct attributedRelationshipsTests {
         
     }
     
-    @Test("Making Tunes")
-    func makeTune() {
-        let context = appDelegate.persistentContainer.viewContext
-        _ = TDMTune.makeInstance(context: context, displayName: "A tune")
-        let tunesFetchRequest : NSFetchRequest<TDMTune> = TDMTune.fetchRequest()
+    //I had to use newBackgroundContext() instead of viewcontext because SwiftTesting runs in parallel for the arguments
+    @Test("Making Tunes",arguments: ["A tune","B tune","C tune","D tune","ambiguousSearchable"])
+    func makeTune(_ tuneName: String) {
+        let context = appDelegate.persistentContainer.newBackgroundContext()
+        _ = TDMTune.makeInstance(context: context, displayName: tuneName)
         do {
             try context.save()
-            let result = try context.fetch(tunesFetchRequest)
-            let count = try context.count(for:tunesFetchRequest)
+            let (result,count) = try TDMTune.fetchByName(name: tuneName, context: context)
             #expect( count == 1 )
             let tune = result[0]
-            #expect(tune.displayName == "A tune" )
+            #expect(tune.displayName == tuneName )
         }
         catch {
-            print("can't fetch")
+            print("can't fetch tunes")
         }
 
     }
     
-    @Test("Making TuneSets")
-    func makeTuneSet() {
-        let context = appDelegate.persistentContainer.viewContext
-        _ = TDMTuneSet.makeInstance(context: context, displayName: "A tuneSet")
-        let tuneSetsFetchRequest : NSFetchRequest<TDMTuneSet> = TDMTuneSet.fetchRequest()
+    @Test("Making Empty TuneSets", arguments: ["1 Set","2 Set","3 Set", "4 Set","ambiguousSearchable"])
+    func makeTuneSet(_ tuneSetName : String) {
+        let context = appDelegate.persistentContainer.newBackgroundContext()
+        _ = TDMTuneSet.makeInstance(context: context, displayName: tuneSetName)
         do {
             try context.save()
-            let result = try context.fetch(tuneSetsFetchRequest)
-            let count = try context.count(for:tuneSetsFetchRequest)
+            let (result,count) = try TDMTuneSet.fetchByName(name: tuneSetName, context: context)
             #expect( count == 1 )
             let tuneSet = result[0]
-            #expect(tuneSet.displayName == "A tuneSet" )
+            #expect(tuneSet.displayName == tuneSetName )
         }
         catch {
-            print("can't fetch")
+            print("can't fetch tune sets")
         }
 
     }
     
-    @Test("Making Collections")
-    func makeCollection() {
-        let context = appDelegate.persistentContainer.viewContext
-        _ = TDMCollection.makeInstance(context: context, displayName: "A collection")
-        let collectionsFetchRequest : NSFetchRequest<TDMCollection> = TDMCollection.fetchRequest()
+    @Test("Making Empty Collections",arguments: ["A Collection","B Collection","C Collection", "D Collection"])
+    func makeCollection(_ collectionName : String) {
+        let context = appDelegate.persistentContainer.newBackgroundContext()
+        _ = TDMCollection.makeInstance(context: context, displayName: collectionName)
         do {
             try context.save()
-            let result = try context.fetch(collectionsFetchRequest)
-            let count = try context.count(for:collectionsFetchRequest)
+            let (result,count) = try TDMCollection.fetchByName(name: collectionName, context: context)
             #expect( count == 1 )
             let collection = result[0]
-            #expect(collection.displayName == "A collection" )
+            #expect(collection.displayName == collectionName )
         }
         catch {
-            print("can't fetch")
+            print("can't fetch collections")
         }
     }
+    
+    // Need to make sure I can add tunes in an arbitrary order to a set
+    @Test("Add tunes to a set (ordered)")
+    func addTunesToSet(){
+        
+    }
+    
+    // Need to make sure I can add tunes in an arbitrary order to a collection
+    // note that 'items' is an NSOrderedSet? - when I change over to the new backing model I need to present an 'items' facade
+
+    @Test("Add tunes to a collection (ordered)")
+    func addTunesToCollection(){
+        
+    }
+    
+    @Test("Remove tune from a set (preserve order)")
+    func removeTuneFromSet() {
+        
+    }
+    
+    @Test("Remove tune from collection (preserve order)")
+    func removeTuneFromCollection() {
+        
+    }
+    
+    @Test("Delete tune that is in Set and Collection")
+    func deleteTuneInContainers() {
+        
+    }
+    
+    
 
 
 }
