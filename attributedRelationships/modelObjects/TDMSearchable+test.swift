@@ -21,6 +21,17 @@ extension TDMSearchable {
                 
     }
     
+    // naming this to avoid name conflict with subclasses
+    class func fetchItemByName(name: String, context : NSManagedObjectContext)throws ->([TDMSearchable],Int) {
+        let fetchRequest : NSFetchRequest<TDMSearchable> = fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "displayName == %@", name )
+        do {
+            let result = try context.fetch(fetchRequest)
+            return try (result,context.count(for: fetchRequest))
+        }
+    }
+
+    
     class func collatingName(displayName:String?) -> String?{
         return displayName
     }

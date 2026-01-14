@@ -11,9 +11,7 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var unitTesting = false
-
-
+    var unitTesting = true 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -72,14 +70,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var persistentContainerForUnitTest : NSPersistentContainer = {
         let description = NSPersistentStoreDescription()
          description.url = URL(fileURLWithPath: "/dev/null")
-         let container = NSPersistentContainer(name: "attributedRelationships")
-         container.persistentStoreDescriptions = [description]
-         container.loadPersistentStores { _, error in
+         _container = NSPersistentContainer(name: "attributedRelationships")
+        _container?.persistentStoreDescriptions = [description]
+        _container?.loadPersistentStores { _, error in
              if let error = error as NSError? {
                  fatalError("Unresolved error \(error), \(error.userInfo)")
              }
          }
-         return container
+         return _container!
      }()
      
     var persistentContainer : NSPersistentContainer {
