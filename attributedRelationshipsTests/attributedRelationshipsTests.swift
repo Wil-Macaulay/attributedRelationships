@@ -194,6 +194,14 @@ struct attributedRelationshipsTests {
         }
     }
     
+    // add an item that is already in a set - should have no effect
+    // reorder items (change an item's index)
+    //
+    @Test("Delete tune that is in Set")
+    func deleteTuneInSet() {
+        
+    }
+
      
     @Test("Remove tune from collection (preserve order)", arguments: ["B tune"], ["A Collection"])
     func removeItem(_ itemName : String, fromCollection collectionName : String) {
@@ -225,8 +233,8 @@ struct attributedRelationshipsTests {
         }
 
     }
-    @Test("Delete tune that is in Set and Collection")
-    func deleteTuneInContainers() {
+    @Test("Delete tune that is in Collection")
+    func deleteTuneInCollection() {
         
     }
     
