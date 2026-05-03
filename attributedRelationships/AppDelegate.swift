@@ -11,7 +11,7 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var unitTesting = true 
+    var unitTesting = false //true 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -109,6 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // remove the persistent store
     func resetDatabase () throws {
+        print("resetting database")
         let coordinator = persistentContainer.persistentStoreCoordinator
         for store in coordinator.persistentStores {
             if let url = store.url {

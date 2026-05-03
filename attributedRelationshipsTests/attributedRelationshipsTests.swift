@@ -20,7 +20,7 @@ struct attributedRelationshipsTests {
     }
     
     //this is disabled because I'm using the "/dev/null" technique in appDelegate
-    @Test("reset",.disabled())
+    @Test("reset") //,.disabled())
     func resetDatabase() throws {
         try appDelegate.resetDatabase()
         let context = appDelegate.persistentContainer.viewContext
@@ -123,8 +123,11 @@ struct attributedRelationshipsTests {
         }
     }
 
-  
-    @Test("Remove tune from a set (preserve order)",arguments:["D tune"],["1 Set"])
+  // remove a tune from a set
+    // should not change the order of the remaining items
+    // should decrement the number of items in the set
+    // item should still exist
+  @Test("Remove tune from a set (preserve order)",arguments:["D tune"],["1 Set"])
     func removeTune(_ tuneName: String, fromSet setName: String ) {
         do {
             let (tuneSets,count) = try TDMTuneSet.fetchByName(name: setName, context: context)
@@ -142,7 +145,7 @@ struct attributedRelationshipsTests {
             tuneSet.removeFromTunes(tune)
             tuneNames.removeAll(where: {tuneName == $0 })
             print(tuneNames)
-            #expect (((tuneSet.tunes?.contains(tune)) == false))
+            #expect ((tuneSet.tunes?.contains(tune)) == false)
             for index in 0..<tuneNames.count {
                 let tune : TDMTune = tuneSet.tunes?[index] as! TDMTune
                 #expect(tuneNames[index] == tune.displayName )
@@ -152,7 +155,81 @@ struct attributedRelationshipsTests {
         catch {
             print("core data error")
         }
+        do {
+            let (tunes,count) = try TDMTune.fetchByName(name: tuneName, context: context)
+            try #require( count == 1 )
+        } catch {
+            print("core data error")
+        }
+    }
+    
+    
+    func set(_ setName: String, containsTune tuneName : String ) -> Bool {
+        do {
+            let (tuneSets,count) = try TDMTuneSet.fetchByName(name: setName, context: context)
+            try #require( count == 1)
+            let (tunes,tune1count) = try TDMTune.fetchByName(name: tuneName, context: context)
+            try #require( tune1count == 1)
+            // capture the tunes that were in the set
+            let tuneSet = tuneSets[0] as TDMTuneSet
+            let tune = tunes[0] as TDMTune
+            let tunesArray : [TDMTune] = tuneSet.tunes?.array as! [TDMTune]
+            if tunesArray.contains(tune) {
+                return true
+            } else {
+                return false
+            }
+        }
+        catch {
+            print("core data error")
+            return false
+        }
+
         
+    }
+    
+    // delete a Tune that is in a Set
+    // should not change the order of the remaining items
+    // should decrement the number of items in the set
+    // item should no longer exist
+    // item should be removed from all sets
+    @Test("Delete tune that is in Set",arguments: ["C tune"],["2 Set"])
+    func deleteTuneInSet(_ tuneName: String, fromSet setName: String ) {
+        do {
+            let (tuneSets,count) = try TDMTuneSet.fetchByName(name: setName, context: context)
+            try #require( count == 1)
+            let (tunes,tune1count) = try TDMTune.fetchByName(name: tuneName, context: context)
+            try #require( tune1count == 1)
+            
+            // capture the tunes that were in the set
+            let tuneSet = tuneSets[0] as TDMTuneSet
+            let tune = tunes[0] as TDMTune
+            let tunesArray : [TDMTune] = tuneSet.tunes?.array as! [TDMTune]
+            #expect (tunesArray.contains(tune))
+            var tuneNames : [String] =  tunesArray.map{$0.displayName!} // assumes displayName is assigned
+            print(tuneNames)
+            //tuneSet.removeFromTunes(tune)
+            try TDMTune.deleteByName(name:tuneName, context:context)
+            print(tuneNames)
+            try context.save() //the save triggers the autodeletion cascade of the reference
+            #expect ((tuneSet.tunes?.contains(tune)) == false) // assumes autodelete
+            tuneNames.removeAll(where: {tuneName == $0 })
+            for index in 0..<tuneNames.count {
+                let tune : TDMTune = tuneSet.tunes?[index] as! TDMTune
+                #expect(tuneNames[index] == tune.displayName )
+            }
+        }
+        catch {
+            print("core data error")
+        }
+        do {
+            let (tunes,count) = try TDMTune.fetchByName(name: tuneName, context: context)
+            try #require( count == 0 )
+            
+        } catch {
+            print("core data error")
+        }
+
     }
 
     
@@ -196,11 +273,6 @@ struct attributedRelationshipsTests {
     
     // add an item that is already in a set - should have no effect
     // reorder items (change an item's index)
-    //
-    @Test("Delete tune that is in Set")
-    func deleteTuneInSet() {
-        
-    }
 
      
     @Test("Remove tune from collection (preserve order)", arguments: ["B tune"], ["A Collection"])
