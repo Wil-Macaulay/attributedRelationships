@@ -18,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		3B2F4C282F0202B400C6A975 /* attributedRelationshipsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = attributedRelationshipsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BBFF5B52FB4DD8100C4CC1E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3BDD4F9F2EEDDE9500F58346 /* attributedRelationships.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = attributedRelationships.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -68,6 +69,7 @@
 		3BDD4F962EEDDE9500F58346 = {
 			isa = PBXGroup;
 			children = (
+				3BBFF5B52FB4DD8100C4CC1E /* README.md */,
 				3BDD4FA12EEDDE9500F58346 /* attributedRelationships */,
 				3B2F4C292F0202B400C6A975 /* attributedRelationshipsTests */,
 				3BDD4FA02EEDDE9500F58346 /* Products */,
