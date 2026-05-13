@@ -156,7 +156,7 @@ struct attributedRelationshipsTests {
             print("core data error")
         }
         do {
-            let (tunes,count) = try TDMTune.fetchByName(name: tuneName, context: context)
+            let (_,count) = try TDMTune.fetchByName(name: tuneName, context: context)
             try #require( count == 1 )
         } catch {
             print("core data error")
@@ -223,7 +223,7 @@ struct attributedRelationshipsTests {
             print("core data error")
         }
         do {
-            let (tunes,count) = try TDMTune.fetchByName(name: tuneName, context: context)
+            let (_,count) = try TDMTune.fetchByName(name: tuneName, context: context)
             try #require( count == 0 )
             
         } catch {

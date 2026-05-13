@@ -87,7 +87,7 @@ class TuneSetViewController: UIViewController, ItemChooserDelegate {
         }
 
         if let detailItem {
-            title = detailItem.displayName
+            title = "Set: " + (detailItem.displayName ?? "<untitled>")
             displayNameField.text = detailItem.displayName
             notesField.text = detailItem.notes
             createdField.text = detailItem.createdDateTime?.formatted()

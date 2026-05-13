@@ -92,7 +92,7 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
     func updateFields () {
         if let detailItem  {
             tableHeader.updateFields(displayName: detailItem.displayName, createdDate: detailItem.createdDateTime, modifiedDate: detailItem.modifiedDateTime)
-            title = detailItem.displayName
+            title = "Collection: " + (detailItem.displayName ?? "<Untitled>")
        }
     }
 
@@ -113,7 +113,7 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "collectionTuneCell", for: indexPath)
         // Configure the cell...
         if let detailItem,
            let item = detailItem.items?[indexPath.row] as? TDMSearchable,

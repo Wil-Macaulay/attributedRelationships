@@ -69,7 +69,7 @@ class TuneViewController: UIViewController {
             notesField.text = detailItem.notes
             createdField.text = detailItem.createdDateTime?.formatted()
             modifiedField.text = detailItem.modifiedDateTime?.formatted()
-            title = detailItem.displayName
+            title = "Tune: " + (detailItem.displayName ?? "<untitled>")
         }
     }
     
