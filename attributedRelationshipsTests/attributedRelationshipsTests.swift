@@ -12,7 +12,7 @@ import CoreData
 @Suite("Database tests (serialized)",.serialized)
 struct attributedRelationshipsTests {
     let appDelegate = AppDelegate.sharedDelegate
-    let context = AppDelegate.sharedDelegate.persistentContainer.newBackgroundContext() // serialized so we can use one
+    var context = AppDelegate.sharedDelegate.persistentContainer.newBackgroundContext() // serialized so we can use one
 
     @Test("Starting")
     func starting() {
@@ -20,10 +20,10 @@ struct attributedRelationshipsTests {
     }
     
     //this is disabled because I'm using the "/dev/null" technique in appDelegate
-    @Test("reset") //,.disabled())
+    @Test("reset") // ,.disabled())
     func resetDatabase() throws {
         try appDelegate.resetDatabase()
-        let context = appDelegate.persistentContainer.viewContext
+        let context = appDelegate.persistentContainer.newBackgroundContext()
         let collectionsFetchRequest = TDMCollection.fetchRequest()
         do {
             let _ = try context.fetch(collectionsFetchRequest)
@@ -53,6 +53,22 @@ struct attributedRelationshipsTests {
         }
 
     }
+    
+    
+    
+    static let tuneDict : [String  : Any] = [
+        "displayName" : "tune from Dict",
+        "notes" : "this was created from a dictionary"
+    ]
+    
+    static let tune2Dict : [String : Any] = [
+        "displayName" : "tune with old dates",
+        "notes" : "should have ancient created and modified dates",
+        "createdDateTime" : Date(timeIntervalSinceNow: -(200 * 60 * 60 * 24)),
+        "modifiedDateTime" : Date(timeIntervalSinceNow: -(60 * 60 * 24)),
+
+    ]
+    
     
     @Test("Making Empty TuneSets", arguments: ["1 Set","2 Set","3 Set", "4 Set","ambiguousSearchable"])
     func makeTuneSet(_ tuneSetName : String) {
@@ -307,6 +323,7 @@ struct attributedRelationshipsTests {
     }
     @Test("Delete tune that is in Collection")
     func deleteTuneInCollection() {
+         #expect(false)
         
     }
     

@@ -47,7 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
         */
-        _container = NSPersistentContainer(name: "attributedRelationships")
+        print("persistentContainerForProd")
+       _container = NSPersistentContainer(name: "attributedRelationships")
         _container?.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -68,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     lazy var persistentContainerForUnitTest : NSPersistentContainer = {
+        print("persistentContainerForUnitTest")
         let description = NSPersistentStoreDescription()
          description.url = URL(fileURLWithPath: "/dev/null")
          _container = NSPersistentContainer(name: "attributedRelationships")

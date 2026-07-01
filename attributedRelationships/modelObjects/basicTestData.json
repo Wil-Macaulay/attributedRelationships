@@ -1,0 +1,27 @@
+{
+    tunes: [
+        {
+            displayName : "first tune",
+            isFavourite : true,
+            notes : "This is autocreated with no optional fields"
+        }
+    ]
+    sets: [
+        {
+            displayName : "the empty set",
+            notes: "just to see if we can import",
+            tunes: [
+                ]
+            ]
+        }
+        
+    ]
+    collections: [
+        {
+            displayName : "the empty collection",
+            items: [
+                ]
+        }
+    ]
+    
+}

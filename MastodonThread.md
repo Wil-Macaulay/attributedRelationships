@@ -1,7 +1,13 @@
+# Mastodon threads
+This file captures the mastodon thread(s) I generated in the course of figuring this stuff out, starting Dec 8 2025.
+
+I've used a line starting with t: to indicate the tags used for each post, to avoid Xcode's Markdown renderer rendering them as headers. 
+
+## Thread 1 (Dec 8 2025 - Jan 14 2026)
 I've had apps on the iOS App Store since 2009, both #indiedev and as jobs.   The Craic (https://apps.apple.com/app/the-craic/id586009292) is an app for finding #irishmusic tunes written in abc notation (https://abcnotation.com), displaying them as standard music notation and organizing them as tune sets and collections.
 Since V 1.0  in 2012 a lot has changed in the #iosdev world. Any new app has to support cloud syncing between clients. I'm going to try a #buildInPublic experiment to make me actually get to it. 1/n
 
- t: #indiedev #irishmusic #iosdev #buildInPublic 
+t: #indiedev #irishmusic #iosdev #buildInPublic 
 
 The app started as objective-C using an in-memory data model persisted to Apple plists. I added #coredata classes soon after. Currently the data model has 4 major domain classes mirrored by core data classes, and some additional classes for convenience.  
 
@@ -212,4 +218,100 @@ Swift Testing error messages can be annoyingly obscure - “cannot convert value
 
 in other words: I forgot my testing macro arguments “abc”,”def" need to be arrays [“abc”],[”def”].  
 
-31/n
+31/31
+
+## Thread 2 (May 13,14 2026)
+
+
+t: #buildInPublic #iosDev
+Back to this after a hiatus of several weeks.  Starting a new thread
+
+previous thread is here https://mastodon.social/@Tom_frog/115686636425331266
+
+I'm going to need to develop the alternate #coreData model described in the previous thread, then develop a data migration.  Finally, I’ll need to sync and deduplicate.  I will use the the #swiftTesting functions I added in the first phase to test the migration.
+
+staying well away from AI since I want to actually understand what I’m doing at the end.
+
+1/n
+
+t: #buildInPublic #iosDev #coreData #swiftTesting
+
+Since I’m eventually going to have to take a populated database and convert it from the old model to the new model, I’m going to tag the current repo so I can come back to it and build my test data.  I should build a test database now that covers all the cases, but I am pretty sure that I’ll think of more as I go along.
+
+Nevertheless, first order of business is to build some infrastructure to populate the test database.
+
+2/n
+
+I'm going to need test data for the obvious CRUD scenarios, but also special cases to support merging sets and collections, as well as modifying a previously synced entity.  The ability to import a text/JSON file would allow me to test merge logic in a repeatable way without worrying about actually setting up cloud sync.
+
+3/n
+
+So the obvious next step is to be able to import Tune - they're my first entity, and in the real app Tunes can be imported from existing datastores and edited via a text editor. 
+
+In my existing basic data model I have:
+
+Tune - inherited from Searchable
+  collatingName : String
+  createdDateTime : Date
+  displayName : String
+  isFavourite : Boolean
+  modifiedDateTime : Date
+  notes : String
+
+Tune - extension
+  tuneSets : (many:many) to Set
+  
+4/n
+
+Directly editable attributes are displayName, isFavourite and Notes, others are set by the app. To properly merge logic I must decide  
+- is an inbound Tune identical to an existing one 
+- should changes to an inbound tune apply  to an existing one.
+
+The rule will be:
+A - an inbound tune with identical displayName+notes to an existing one is considered identical
+B - isFavourite will be set if either the existing or inbound tune has it set
+
+5/n
+
+t: #buildInPublic #iosDev #coreData #swiftTesting
+
+To see if inbound changes apply, I need an invariant identifier so I can tell if I've seen this object before. I don't have one, so I need to add a UUID
+
+6/n
+
+
+new merge rule:
+
+if inbound has UUID {
+    if there is existing with same UUID {
+          update existing with user data from most recently modified
+        } else { //no UUID match
+          if existing with same user data {
+             update existing with incoming UUID
+          } else {  //no user data match
+             insert new with incoming UUID and user data
+          }
+     }
+ } else {//no incoming UUID
+    insert with new UUID
+}
+7/n
+
+t: #buildInPublic #iosDev #coreData #swiftTesting
+
+So I now have a start at a merge strategy I can test.  Note that in the case of UUID conflicts between inbound and existing entities I’m taking the inbound UUID, so that if I modify the local storage it doesn't trigger another modification on the remote - a “sync loop”.  It is still possible to get duplicates locally by creating a new Tune (with a UUID) and then modifying user data to be identical to an existing Tune with a different UUID.
+8/n
+
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'TDMTune' so +entity is unable to disambiguate.
+this happens after I reset the database by deleting the store: the MOM from the original store is not deleted. 
+    
+## Thread 3 (July 1 2026)
+Starting a new thread again since I got distracted for a bit.  (1/n)
+
+Trying to #buildInPublic an offline-first Swift sync engine for the Craic https://apps.apple.com/app/the-craic/id586009292 which supports arbitrarily ordered many:many relationships, using #CoreData as the underlying store. In the process exploring #swiftTesting
+
+ Previous thread was at https://mastodon.social/@Tom_frog/116569682831391398, start of first thread was at   https://mastodon.social/@Tom_frog/115686636425331266 1/n
+ 
+ 
+ 
+

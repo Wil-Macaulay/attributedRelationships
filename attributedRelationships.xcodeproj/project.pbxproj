@@ -28,6 +28,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3B7A9DA82FF5582A0024ED2B /* Exceptions for "attributedRelationships" folder in "attributedRelationshipsTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				modelObjects/AbcTune.swift,
+				modelObjects/AbcTuneSet.swift,
+			);
+			target = 3B2F4C272F0202B400C6A975 /* attributedRelationshipsTests */;
+		};
 		3BDD4FB42EEDDE9700F58346 /* Exceptions for "attributedRelationships" folder in "attributedRelationships" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -47,6 +55,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				3BDD4FB42EEDDE9700F58346 /* Exceptions for "attributedRelationships" folder in "attributedRelationships" target */,
+				3B7A9DA82FF5582A0024ED2B /* Exceptions for "attributedRelationships" folder in "attributedRelationshipsTests" target */,
 			);
 			path = attributedRelationships;
 			sourceTree = "<group>";
