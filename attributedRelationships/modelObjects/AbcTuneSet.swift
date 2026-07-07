@@ -7,27 +7,26 @@
 
 import Foundation
 
-public class AbcTuneSet : Codable {
-    var displayName : String?
-    var notes : String?
-    var createdDateTime : Date = .now
-    var modifiedDateTime : Date = .now
-    var tunes : [AbcTune]? = nil
+public class AbcTuneSet : AbcCollectable {
+
+    var tunes : [AbcTune]? = [AbcTune]()
     
-    init(displayName: String? = nil, notes: String? = nil, createdDateTime: Date = .now, modifiedDateTime: Date = .now, tunes : [AbcTune]? = nil) {
-        self.displayName = displayName
-        self.notes = notes
-        self.createdDateTime = createdDateTime
-        self.modifiedDateTime = modifiedDateTime
+    init(displayName: String? = nil, notes: String? = nil, createdDateTime: Date = .now, modifiedDateTime: Date = .now, tunes : [AbcTune]? = [AbcTune]()) {
+        super.init(displayName: displayName,notes: notes,createdDateTime: createdDateTime,modifiedDateTime: modifiedDateTime)
         self.tunes = tunes
     }
     
+    public enum CodingKeys : String, CodingKey {
+        case displayName
+        case notes
+        case createdDateTime
+        case modifiedDateTime
+        case tunes
+    }
+
     public required init(from decoder: any Decoder) throws {
+        try super.init(from: decoder)
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
-        notes = try container.decodeIfPresent(String.self, forKey: .notes)
-        createdDateTime = try container.decodeIfPresent(Date.self, forKey: .createdDateTime) ?? .now
-        modifiedDateTime = try container.decodeIfPresent(Date.self, forKey: .modifiedDateTime) ?? .now
         tunes = try container.decodeIfPresent([AbcTune].self, forKey: .tunes)
     }
 

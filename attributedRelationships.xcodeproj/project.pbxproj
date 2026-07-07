@@ -31,6 +31,7 @@
 		3B7A9DA82FF5582A0024ED2B /* Exceptions for "attributedRelationships" folder in "attributedRelationshipsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				modelObjects/AbcCollectable.swift,
 				modelObjects/AbcTune.swift,
 				modelObjects/AbcTuneSet.swift,
 			);

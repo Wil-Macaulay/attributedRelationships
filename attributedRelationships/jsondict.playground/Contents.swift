@@ -38,5 +38,10 @@ let decodedTunes : [AbcTune] = try! decoder.decode([AbcTune].self, from: content
 let reEncodedTunes = try! encoder.encode(decodedTunes)
 let reEncodedString = String(data: reEncodedTunes, encoding: .utf8)
 
+let file2URL = Bundle.main.url(forResource: "tuneSets", withExtension: "json")
+
+let content2 = try! String(contentsOf: file2URL!, encoding: .utf8)
+let content2Data = content2.data(using: .utf8)
+let decodedSets : [AbcTuneSet] = try! decoder.decode([AbcTuneSet].self, from: content2Data!)
 
 

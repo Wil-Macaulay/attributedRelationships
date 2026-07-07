@@ -312,6 +312,55 @@ Trying to #buildInPublic an offline-first Swift sync engine for the Craic https:
 
  Previous thread was at https://mastodon.social/@Tom_frog/116569682831391398, start of first thread was at   https://mastodon.social/@Tom_frog/115686636425331266 1/n
  
+ 2/n
  
- 
+t: #buildInPublic #CoreData #swiftTesting
+
+Spending a little time figuring out the best way to build input files of test data. In the Objc days I used to read json into NSDictionaries and then build my domain objects from there. Swift has the Codable protocol (Encodable + Decodable) plus JSONEncoder / JSONDecoder which gives us a nice way of getting from json to domain objects.  (2/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+types (that is classes or structs) that are built from Codables can be trivially made codable.  Fortunately most of the properties of our domain objects are Codable (Strings and Dates). however, NSManagedObjects are not directly Codable, since you need an NSManagedObjectContext to create an instance.
+
+There are ways around that, but more importantly we've got [m:m] relationships in our data model which are hard to directly encode/decode.  (3/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+So we're introducing some Data Transfer Objects [DTOs] that can be trivially Codable.
+
+How do we represent the [m:m] relationships? two choices:
+1. denormalize in the json file, so that we start by ingesting Collections, providing a full copy of each TuneSet and Tune occuring in each Collection then culling out duplicates
+2. introduce an ID attribute for each domain object so that we ingest relationships as an ID to be reconciled after ingestion.
+(4/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+Approach 1 would let us trivially use Decoders to ingest the data files and Encoders to write them, the files will get big fast.
+Approach 2 lets us more easily manually prepare special test cases and is easier to understand.  Let's go with approach 2.
+(5/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+incidentally, nice summary of Codable with JSON here: https://medium.com/@ankuriosdev/basics-of-json-encoding-and-decoding-in-swift-language-6bb73affc6bb
+
+(6/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+A slight wrinkle: a Collection can contain both Tunes and TuneSets, in arbitrary order.  In our CoreData model, we handle this by having a common superclass, Collectable, which has the common attributes and relationships.  The ‘obvious' thing to do is have a common DTO superclass AbcCollectible handle basic encoding and decoding with the subclasses doing anything specific - in our trimmed down prototype that means TuneSet handling contained Tunes
+(7/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+Do I need an explicit ‘type' field as shown here? let's see…
+
+https://medium.com/@ankuriosdev/mastering-advanced-json-decoding-in-swift-part-2-74d5a956dd0a
+
+(8/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+Looks like I can't inherit CodingKeys from a superclass, I have to redefine them in any subclass that adds properties.  Yet another example of the Swift language designers wagging their collective fingers at inheritance vs composition… 
+
+(9/n)
 
