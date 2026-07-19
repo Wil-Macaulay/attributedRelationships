@@ -364,3 +364,42 @@ Looks like I can't inherit CodingKeys from a superclass, I have to redefine them
 
 (9/n)
 
+t: #buildInPublic #CoreData #swiftTesting
+
+I can't inherit CodingKeys, but I _can_ inherit init(from decoder) as well as superclass properties.  
+
+so I've implemented AbcCollectable as a superclass of AbcTune and AbcTuneSet, mirroring the TDMTune and TDMTuneSet relationships. (pushed to the GitHub repo for anyone who’s following along.
+
+Next I want to implement AbcCollection as a container for _both_ AbcTunes and AbcTuneSets
+
+(10/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+(got distracted by other stuff, including wiring up a gazebo and playing tunes. Back at it now…)
+
+I want to be able to allow the user to have an arbitrary Collection of Tunes and Sets in any order, so I’ll need an Array of Collectables [AbcCollectable].  Now I really am going to need to distinguish between a Tune and a TuneSet at runtime. (11/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+I found a few similar ways of doing this using enum with associated type
+
+https://medium.com/@ankuriosdev/mastering-advanced-json-decoding-in-swift-part-2-74d5a956dd0a
+
+https://www.caseyliss.com/2023/2/2/decoding-heterogeneous-json-arrays-in-swift
+
+This one from @paulio87@hachyderm.io seems the most straightforward  to me:
+
+https://paul-samuels.com/blog/2019/01/02/swift-heterogeneous-codable-array/
+
+it doesn’t require the domain DTOs (in this case AbcTune and AbcTuneSet) to have an explicit 'type’ field, but brings that out to a container.  
+
+(12/n)
+
+t: #buildInPublic #CoreData #swiftTesting
+
+ready to push to GitHub again.  The DTOs are in the main project but only being exercised from the playground.  Time to implement transferring from the DTO to the CoreData store.
+
+13/n
+
+

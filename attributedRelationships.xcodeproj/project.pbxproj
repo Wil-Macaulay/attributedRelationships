@@ -32,6 +32,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				modelObjects/AbcCollectable.swift,
+				modelObjects/AbcCollection.swift,
 				modelObjects/AbcTune.swift,
 				modelObjects/AbcTuneSet.swift,
 			);

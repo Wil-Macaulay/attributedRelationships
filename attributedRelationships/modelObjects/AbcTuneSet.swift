@@ -16,6 +16,8 @@ public class AbcTuneSet : AbcCollectable {
         self.tunes = tunes
     }
     
+    //NOTE: I have to explicitly redeclare all the CodingKeys here, unlike in AbcTune because I have added an attribute ('tunes')
+    //      AbcTune has the same attributes as the base class (for now), so it can inherit CodingKeys
     public enum CodingKeys : String, CodingKey {
         case displayName
         case notes
@@ -25,9 +27,9 @@ public class AbcTuneSet : AbcCollectable {
     }
 
     public required init(from decoder: any Decoder) throws {
-        try super.init(from: decoder)
+        try super.init(from: decoder)   // inherit base attributesfrom base class
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tunes = try container.decodeIfPresent([AbcTune].self, forKey: .tunes)
+        tunes = try container.decodeIfPresent([AbcTune].self, forKey: .tunes) // now decode the tunes if present
     }
 
 }

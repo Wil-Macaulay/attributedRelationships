@@ -44,4 +44,8 @@ let content2 = try! String(contentsOf: file2URL!, encoding: .utf8)
 let content2Data = content2.data(using: .utf8)
 let decodedSets : [AbcTuneSet] = try! decoder.decode([AbcTuneSet].self, from: content2Data!)
 
+let file3URL = Bundle.main.url(forResource: "collections", withExtension: "json")
 
+let content3 = try! String(contentsOf: file3URL! , encoding: .utf8)
+let content3data = content3.data(using: .utf8)
+let decodedCollections : [AbcCollection] = try! decoder.decode([AbcCollection].self, from: content3data!)

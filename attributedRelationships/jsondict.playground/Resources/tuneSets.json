@@ -29,5 +29,9 @@
                 "displayName" : "tune in set with name only, no other attributes"
             }
         ]
+    },
+    {
+        "notes" :   " an empty tune set",
+        "displayName"   : "the empty set"
     }
 ]
