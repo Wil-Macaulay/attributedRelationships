@@ -16,11 +16,11 @@ struct attributedRelationshipsTests {
 
     @Test("Starting")
     func starting() {
-        #expect ("yes" == "yes")
+        #expect (true)
     }
     
     //this is disabled because I'm using the "/dev/null" technique in appDelegate
-    @Test("reset") // ,.disabled())
+    @Test("reset",.disabled())
     func resetDatabase() throws {
         try appDelegate.resetDatabase()
         let context = appDelegate.persistentContainer.newBackgroundContext()

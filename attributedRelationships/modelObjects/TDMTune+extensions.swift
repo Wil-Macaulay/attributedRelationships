@@ -21,7 +21,7 @@ extension TDMTune {
     }
     
     class func deleteByName(name: String, context : NSManagedObjectContext) throws {
-        let (candidates,count) = try fetchByName(name: name, context: context)
+        let (candidates, _) = try fetchByName(name: name, context: context)
         for tune in candidates {
             print("deleting tune \(tune)")
             context.delete(tune)

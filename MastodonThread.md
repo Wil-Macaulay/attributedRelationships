@@ -402,4 +402,40 @@ ready to push to GitHub again.  The DTOs are in the main project but only being 
 
 13/n
 
+t: #buildInPublic #CoreData #swiftTesting
 
+next: Conversion of the DTOs to CoreData objects.  
+The current structure of JSON encoding assumes a top-down/denormalized structure for import, but since Tunes <-> TuneSets is many:many and Collectibles <-> Collections is m:m,  I'd like a way to avoid re-specifying the containment tree.
+
+ As part of that I'll need to look at how to de-duplicate with respect to existing objects. 
+
+14/n
+
+t: #buildInPublic #CoreData #swiftTesting
+
+lets do the simplest case first: AbcTune to TDMTune.
+
+15/n
+
+t: #buildInPublic #CoreData #swiftTesting
+
+bit of a digression here: from my ObjC CoreData days I've been generating the NSManagedObject class definitions through XCode, then my own related code (in this case for translating back and forth from the DTOs) in a separate file as an objC category, with the generated files untouched.
+I built class methods in the base TDMSearchable class
+  class func makeInstance(from abcObj : some AbcCollectable, context :NSManagedObjectContext) -> TDMSearchable 
+16/n
+
+t: #buildInPublic #CoreData #swiftTesting
+
+Since my inheritance tree for the DTOs maps 1:1 onto the CoreData managed objects, I'd like to inherit the class methods in the subclasses TDMTune and TDMTuneSet, e.g. in TDMTuneSet
+    class func makeInstance(from abcObj: AbcTuneSet, context: NSManagedObjectContext) -> TDMTuneSet
+
+Unfortunately Swift doesn’t allow overriding base-class methods in an extension, so I have to modify the generated TDMxxx+CoreDataClass.swift
+17/n
+
+t: #buildInPublic #CoreData #swiftTesting
+
+To satisfy myself that XCode doesn't touch the generated xxx+CoreDataClass.swift file if it exists, when regenerating the properties file, I made a small change and tried it.  In the process I added the Swift testing file as a target, which made all my tests fail in strange ways.
+
+back to regularly scheduled programming…
+
+18/n

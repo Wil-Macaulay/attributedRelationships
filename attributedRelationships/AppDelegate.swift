@@ -11,11 +11,11 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var unitTesting = false //true 
+    var unitTesting = true
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        // makeTestData()
+        makeTestData()
         return true
     }
 
@@ -128,6 +128,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let test1 = TDMTune.makeInstance(context: context, displayName: "first test tune", notes: "no notes")
         let test2 = TDMTune.makeInstance(context: context, displayName: "second test tune", notes: "some notes")
         let test3 = TDMTune.makeInstance(context: context, displayName: "third test tune", notes: "some more notes")
+        let (tunes,count) = try! TDMTune.fetchByName(name: "first test tune", context: context)
+        print("\(count) tunes",tunes)
 
         let testSet = TDMTuneSet.makeInstance(context: context, displayName: "first test set", notes: "test set notes") as! TDMTuneSet
         let testSet2 = TDMTuneSet.makeInstance(context: context, displayName: "second test set", notes: "test set 2 notes") as! TDMTuneSet
