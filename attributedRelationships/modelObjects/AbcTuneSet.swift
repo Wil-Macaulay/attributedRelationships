@@ -9,11 +9,11 @@ import Foundation
 
 public class AbcTuneSet : AbcCollectable {
 
-    var tunes : [AbcTune]? = [AbcTune]()
+    var tunes : [AbcTune] = [AbcTune]()
     
     init(displayName: String? = nil, notes: String? = nil, createdDateTime: Date = .now, modifiedDateTime: Date = .now, tunes : [AbcTune]? = [AbcTune]()) {
         super.init(displayName: displayName,notes: notes,createdDateTime: createdDateTime,modifiedDateTime: modifiedDateTime)
-        self.tunes = tunes
+        self.tunes = tunes ?? [AbcTune]()
     }
     
     //NOTE: I have to explicitly redeclare all the CodingKeys here, unlike in AbcTune because I have added an attribute ('tunes')
@@ -27,9 +27,29 @@ public class AbcTuneSet : AbcCollectable {
     }
 
     public required init(from decoder: any Decoder) throws {
+        print("AbcTuneSet init(from decoder:)")
         try super.init(from: decoder)   // inherit base attributesfrom base class
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tunes = try container.decodeIfPresent([AbcTune].self, forKey: .tunes) // now decode the tunes if present
+        tunes = try container.decodeIfPresent([AbcTune].self, forKey: .tunes) ?? [AbcTune]() // now decode the tunes if present
+    }
+    
+    class func importFromJsonFile(_ fileName : String) -> [AbcTuneSet]{
+        var tunesets = [AbcTuneSet]()
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let fileURL = Bundle.main.url(forResource: fileName, withExtension: "json")
+        if let fileURL {
+            do {
+                if let content = try String(contentsOf: fileURL, encoding: .utf8).data(using: .utf8){
+                    tunesets = try decoder.decode([AbcTuneSet].self, from: content)
+                }
+            } catch {
+                print("can't decode file as tuneSets \(error)")
+                return [AbcTuneSet]()
+            }
+        }
+        
+        return tunesets
     }
 
 }

@@ -38,8 +38,12 @@ public class AbcCollection : Codable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
             switch try container.decode(String.self, forKey: .itemType){
-            case Unassociated.tune.rawValue: self = .tune(try container.decode(AbcTune.self, forKey: .attributes))
-            case Unassociated.tuneSet.rawValue: self = .tuneSet(try container.decode(AbcTuneSet.self, forKey:  .attributes))
+            case Unassociated.tune.rawValue:
+                print("decoding tune in collection")
+                self = .tune(try container.decode(AbcTune.self, forKey: .attributes))
+            case Unassociated.tuneSet.rawValue:
+                print("decoding tuneSet in collection")
+                self = .tuneSet(try container.decode(AbcTuneSet.self, forKey:  .attributes))
             default:
                 fatalError("Unknown type")
             }
@@ -68,5 +72,25 @@ public class AbcCollection : Codable {
         self.modifiedDateTime = try container.decodeIfPresent(Date.self, forKey: .modifiedDateTime) ?? .now
         self.items = try container.decodeIfPresent([AbcCollection.CollectionItem].self, forKey: .items) ?? [CollectionItem]()
     }
-    
+
+    class func importFromJsonFile(_ fileName : String) -> [AbcCollection]{
+        let fileURL = Bundle.main.url(forResource: fileName, withExtension: "json")
+        var collections = [AbcCollection]()
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        if let fileURL {
+            do {
+                if let content = try String(contentsOf: fileURL, encoding: .utf8).data(using: .utf8){
+                    collections = try decoder.decode([AbcCollection].self, from: content)
+                }
+            } catch {
+                print("can't decode file as collections \(error)")
+                return [AbcCollection]()
+            }
+        }
+        
+        return collections
+    }
+
 }
+

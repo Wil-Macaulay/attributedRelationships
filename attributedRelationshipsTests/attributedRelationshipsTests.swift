@@ -9,7 +9,7 @@ import Testing
 import CoreData
 @testable import attributedRelationships
 
-@Suite("Database tests (serialized)",.serialized)
+@Suite("Basic Database tests (serialized)",.serialized)
 struct attributedRelationshipsTests {
     let appDelegate = AppDelegate.sharedDelegate
     var context = AppDelegate.sharedDelegate.persistentContainer.newBackgroundContext() // serialized so we can use one
@@ -224,7 +224,6 @@ struct attributedRelationshipsTests {
             #expect (tunesArray.contains(tune))
             var tuneNames : [String] =  tunesArray.map{$0.displayName!} // assumes displayName is assigned
             print(tuneNames)
-            //tuneSet.removeFromTunes(tune)
             try TDMTune.deleteByName(name:tuneName, context:context)
             print(tuneNames)
             try context.save() //the save triggers the autodeletion cascade of the reference
@@ -305,10 +304,10 @@ struct attributedRelationshipsTests {
             let itemsArray : [TDMSearchable] = collection.items?.array as! [TDMSearchable]
             #expect (itemsArray.contains(item))
             var itemNames : [String] =  itemsArray.map{$0.displayName!} // assumes displayName is assigned
-            print(itemNames)
+            print("items in collection \(collection.displayName ?? "<nameless collection>") \(itemNames) )")
             collection.removeFromItems(item)
             itemNames.removeAll(where: {itemName == $0 })
-            print(itemNames)
+            print("items after removal \(itemNames)")
             #expect (((collection.items?.contains(item)) == false))
             for index in 0..<itemNames.count {
                 let tune : TDMSearchable = collection.items?[index] as! TDMSearchable

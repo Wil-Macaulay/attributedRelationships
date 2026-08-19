@@ -93,9 +93,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let leafVC = LeafViewController()
         leafVC.title = title
         let navController = UINavigationController(rootViewController: leafVC)
+        leafVC.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Import", style: .plain, target: self, action: #selector(importJson))
+
         print("--- returning navController for " + title)
         return navController
 
+    }
+    
+    @IBAction func importJson(){
+        let abcTunes = AbcTune.importFromJsonFile("tunesData")
+        let abcSets = AbcTuneSet.importFromJsonFile("tuneSets")
+        let abcCollections = AbcCollection.importFromJsonFile("collections")
+        print("collections \(abcCollections)")
     }
     
     func setsBrowser()->UIViewController {
