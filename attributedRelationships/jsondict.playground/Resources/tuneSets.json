@@ -33,5 +33,14 @@
     {
         "notes" :   " an empty tune set",
         "displayName"   : "the empty set"
+    },
+    {
+        "notes" :  "set with IDs",
+        "displayName" : "ids set",
+        "tuneIds"   :   [
+            "1234",
+            "abcd"
+        ]
     }
+    
 ]

@@ -10,7 +10,7 @@
                 "itemType"  : "tuneSet",
                 "attributes" :
                 {
-                    "notes" : "a tune set with 4 tunes included explicitly",
+                    "notes" : "a tune set with tunes included explicitly",
                     "displayName" : "Tune Set One",
                     
                     
@@ -57,15 +57,6 @@
                     "displayName" : "tune not in a set with name only, no other attributes"
                 }
             }
-            
-        ]
-    },
-    {
-        "displayName"   :   "empty collection"
-    },
-    {
-        "items" :
-        [
             
         ]
     }

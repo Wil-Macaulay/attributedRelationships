@@ -11,7 +11,7 @@ public class AbcCollection : Codable {
     var displayName : String?
     var createdDateTime : Date = .now
     var modifiedDateTime : Date = .now
-    let items : [CollectionItem]
+    var items : [CollectionItem] = [CollectionItem]()
     
     enum CollectionItem : Codable {
         case tune(AbcTune)

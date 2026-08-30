@@ -101,8 +101,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     @IBAction func importJson(){
+        print("importing...")
         let abcTunes = AbcTune.importFromJsonFile("tunesData")
+        print("tunes \(abcTunes)")
         let abcSets = AbcTuneSet.importFromJsonFile("tuneSets")
+        print("sets \(abcSets)")
         let abcCollections = AbcCollection.importFromJsonFile("collections")
         print("collections \(abcCollections)")
     }

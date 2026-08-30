@@ -14,7 +14,7 @@ public class AbcCollectable : Codable {
     var createdDateTime : Date = .now
     var modifiedDateTime : Date = .now
     
-    public enum CodingKeys : String, CodingKey {
+    public enum CollectableCodingKeys : String, CodingKey {
         case displayName
         case notes
         case createdDateTime
@@ -29,7 +29,7 @@ public class AbcCollectable : Codable {
     }
     
     public required init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: CollectableCodingKeys.self)
         displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
         notes = try container.decodeIfPresent(String.self, forKey: .notes)
         createdDateTime = try container.decodeIfPresent(Date.self, forKey: .createdDateTime) ?? .now

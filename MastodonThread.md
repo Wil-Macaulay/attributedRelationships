@@ -439,3 +439,5 @@ To satisfy myself that XCode doesn't touch the generated xxx+CoreDataClass.swift
 back to regularly scheduled programming…
 
 18/n
+
+Returning after a long break.  I can import an array of AbcTune or AbcTuneSet from json files, but when I try to decode an AbcCollection with a mixed array of AbcTune and AbcTuneSet, the TuneSets get corrupted. If I don't try to decode the tunes attribute of AbcTuneSet, the rest of it is OK.
