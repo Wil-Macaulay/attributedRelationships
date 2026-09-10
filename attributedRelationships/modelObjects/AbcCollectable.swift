@@ -8,32 +8,30 @@
 import Foundation
 
 public class AbcCollectable : Codable {
+    let items: [AbcCollectable]?
+    let itemType: String
+    let notes: String?
+    let displayName: String?
+    var modifiedDateTime: Date = .now
+    var createdDateTime: Date = .now
     
-    var displayName : String?
-    var notes : String?
-    var createdDateTime : Date = .now
-    var modifiedDateTime : Date = .now
-    
-    public enum CollectableCodingKeys : String, CodingKey {
+    enum CollectableCodingKeys : String, CodingKey {
         case displayName
         case notes
         case createdDateTime
         case modifiedDateTime
+        case items
+        case itemType
     }
     
-    init(displayName: String? = nil, notes: String? = nil, createdDateTime: Date = .now, modifiedDateTime: Date = .now) {
-        self.displayName = displayName
-        self.notes = notes
-        self.createdDateTime = createdDateTime
-        self.modifiedDateTime = modifiedDateTime
-    }
-    
-    public required init(from decoder: any Decoder) throws {
+    required public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CollectableCodingKeys.self)
         displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
         notes = try container.decodeIfPresent(String.self, forKey: .notes)
         createdDateTime = try container.decodeIfPresent(Date.self, forKey: .createdDateTime) ?? .now
         modifiedDateTime = try container.decodeIfPresent(Date.self, forKey: .modifiedDateTime) ?? .now
+        items = try container.decodeIfPresent([AbcCollectable].self, forKey: .items)
+        itemType = try container.decode(String.self, forKey: .itemType)
     }
 }
 

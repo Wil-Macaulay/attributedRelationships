@@ -17,11 +17,12 @@ public class TDMTuneSet: TDMSearchable {
     class func makeInstance(from abcObj: AbcTuneSet, context: NSManagedObjectContext) -> TDMTuneSet {
         var newInstance = super.makeInstance(context: context, displayName: abcObj.displayName, notes: abcObj.notes) as! TDMTuneSet
         
-        let tunes = abcObj.tunes
-            for tune in tunes {
-                let theTune = TDMTune.makeInstance(from: tune, context: context) as! TDMTune
+        if let items = abcObj.items{
+            for item in items {
+                let theTune = TDMTune.makeInstance(from: item, context: context) as! TDMTune
                 newInstance.addToTunes(theTune)
             }
+        }
         
         return newInstance
     }

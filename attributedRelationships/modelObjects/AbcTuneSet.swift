@@ -9,13 +9,8 @@ import Foundation
 
 public class AbcTuneSet : AbcCollectable {
 
-    var tunes : [AbcTune] = [AbcTune]()
     var tuneIds : [String] = [String]()
     
-    init(displayName: String? = nil, notes: String? = nil, createdDateTime: Date = .now, modifiedDateTime: Date = .now, tunes : [AbcTune]? = [AbcTune]()) {
-        super.init(displayName: displayName,notes: notes,createdDateTime: createdDateTime,modifiedDateTime: modifiedDateTime)
-        self.tunes = tunes ?? [AbcTune]()
-    }
     
     //NOTE: I have to explicitly redeclare all the CodingKeys here, unlike in AbcTune because I have added an attribute ('tunes')
     //      AbcTune has the same attributes as the base class (for now), so it can inherit CodingKeys
@@ -24,15 +19,15 @@ public class AbcTuneSet : AbcCollectable {
         case notes
         case createdDateTime
         case modifiedDateTime
-        case tunes
         case tuneIds
+        case items
+        case itemType
     }
 
     public required init(from decoder: any Decoder) throws {
         print("AbcTuneSet init(from decoder:)")
         try super.init(from: decoder)   // inherit base attributesfrom base class
         let container = try decoder.container(keyedBy: TuneSetCodingKeys.self)
-        tunes = try container.decodeIfPresent([AbcTune].self, forKey: .tunes) ?? [AbcTune]() // now decode the tunes if present
         tuneIds = try container.decodeIfPresent([String].self, forKey: .tuneIds) ?? [String]() // decode the tuneIds
     }
     

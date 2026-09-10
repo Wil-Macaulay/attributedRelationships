@@ -1,5 +1,6 @@
 [
 {
+    "itemType" :  "tune",
   "notes" : "should have ancient created and modified dates",
   "modifiedDateTime" : "2026-06-26T15:05:02Z",
   "displayName" : "tune with old dates",
@@ -7,6 +8,7 @@
 },
 
 {
+    "itemType" :  "tune",
   "notes" : "second one I've made",
   "modifiedDateTime" : "2026-06-26T11:05:02Z",
   "displayName" : "this is a newer tune",
@@ -14,11 +16,13 @@
 },
 
 {
+    "itemType" :  "tune",
   "notes" : "third one I've made",
   "displayName" : "this is a newer tune",
 },
 
 {
+    "itemType" :  "tune",
     "displayName" : "name only, no other attributes"
  }
 ]

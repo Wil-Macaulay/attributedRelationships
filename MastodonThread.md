@@ -440,4 +440,26 @@ back to regularly scheduled programming…
 
 18/n
 
-Returning after a long break.  I can import an array of AbcTune or AbcTuneSet from json files, but when I try to decode an AbcCollection with a mixed array of AbcTune and AbcTuneSet, the TuneSets get corrupted. If I don't try to decode the tunes attribute of AbcTuneSet, the rest of it is OK.
+t: #buildInPublic #CoreData #swiftTesting 
+
+Returning after a long set of rabbit holes.  using enums with associated types as described here https://paul-samuels.com/blog/2019/01/02/swift-heterogeneous-codable-array/
+I can import an array of AbcTune or AbcTuneSet from json files, including AbcTuneSets that have Tunes. I can import Collections containing a mixture of Tunes or TuneSets, as long as the TuneSets don't contain any tunes. But when I try to import a Collection with a TunesSet containing a Tune the associated type is corrupted.
+19/n
+
+t: #buildInPublic #CoreData #swiftTesting
+
+Radically simplifying: lets include an explicit type field in my DTO.  The only difference in Tunes and TuneSets is that TuneSets can contain Tunes. Collections contain Tunes and/or TuneSets.  A single DTO type (could be a struct)
+
+class AbcCollectable : Codable {
+    let items: [AbcCollectable]?
+    let itemType: String
+    let notes: String?
+    let displayName: String?
+    var modifiedDateTime: Date = .now
+    var createdDateTime: Date = .now
+}
+20/n
+
+
+https://almostengineer.medium.com/decoding-json-with-endless-nesting-in-swift-recursion-in-use-8538f206d626
+

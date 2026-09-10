@@ -4,26 +4,12 @@ import UIKit
 
 let formatter = ISO8601DateFormatter()
 
-let tunes : [AbcTune] = [
-    AbcTune(displayName: "??"),
-    AbcTune(displayName: "first struct", notes: "with a note"),
-    AbcTune(displayName: "second, no notes"),
-    AbcTune(displayName: "third",notes:" early creation dated",createdDateTime: formatter.date(from: "2026-01-01T15:00:00Z")!)
-]
-
-
-
-
-
 let encoder = JSONEncoder()
 
 encoder.outputFormatting = .prettyPrinted
 encoder.dateEncodingStrategy = .iso8601
 
 
-let secondData = try! encoder.encode(tunes)
-let secondString = String(data: secondData, encoding: .utf8)
-print(secondString!)
 
 let decodedTunes = AbcTune.importFromJsonFile("tunesData")
 

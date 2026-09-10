@@ -14,6 +14,9 @@ public class AbcTune : AbcCollectable {
         case notes
         case createdDateTime
         case modifiedDateTime
+        case items
+        case itemType
+
     }
 
     
@@ -22,9 +25,6 @@ public class AbcTune : AbcCollectable {
         try super.init(from: decoder)   // inherit base attributesfrom base class
     }
     
-    override init(displayName: String? = nil, notes: String? = nil, createdDateTime: Date = .now, modifiedDateTime: Date = .now) {
-        super.init(displayName: displayName,notes: notes,createdDateTime: createdDateTime,modifiedDateTime: modifiedDateTime)
-    }
 
 
     
