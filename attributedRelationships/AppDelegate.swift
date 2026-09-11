@@ -63,6 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                  Check the error message to determine what the actual problem was.
                  */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
+            } else {
+                self._container?.viewContext.automaticallyMergesChangesFromParent = true
+                self._container?.viewContext.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
             }
         })
         return _container!
@@ -77,7 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _container?.loadPersistentStores { _, error in
              if let error = error as NSError? {
                  fatalError("Unresolved error \(error), \(error.userInfo)")
+             } else {
+                 self._container?.viewContext.automaticallyMergesChangesFromParent = true
+                 self._container?.viewContext.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
              }
+            
          }
          return _container!
      }()

@@ -14,13 +14,18 @@ public typealias TDMTuneSetCoreDataClassSet = NSSet
 @objc(TDMTuneSet)
 public class TDMTuneSet: TDMSearchable {
     
-    class func makeInstance(from abcObj: AbcTuneSet, context: NSManagedObjectContext) -> TDMTuneSet {
+    override class func makeInstance(from abcObj: some AbcCollectable, context: NSManagedObjectContext) -> TDMTuneSet? {
+        guard abcObj.itemType == "tuneSet" else {
+            print("not a tuneSet")
+            return nil
+        }
         var newInstance = super.makeInstance(context: context, displayName: abcObj.displayName, notes: abcObj.notes) as! TDMTuneSet
         
         if let items = abcObj.items{
             for item in items {
-                let theTune = TDMTune.makeInstance(from: item, context: context) as! TDMTune
-                newInstance.addToTunes(theTune)
+                if let theTune = TDMTune.makeInstance(from: item, context: context) {
+                    newInstance.addToTunes(theTune)
+                }
             }
         }
         

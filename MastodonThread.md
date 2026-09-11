@@ -460,6 +460,11 @@ class AbcCollectable : Codable {
 }
 20/n
 
+t: #buildInPublic #CoreData #swiftTesting
 
-https://almostengineer.medium.com/decoding-json-with-endless-nesting-in-swift-recursion-in-use-8538f206d626
+note that this is based on https://almostengineer.medium.com/decoding-json-with-endless-nesting-in-swift-recursion-in-use-8538f206d626
+
+I’m not going to try to figure out why my enum-with-associated-class didn't work, since it's not core to what I want to do, which is to be able to create test data.
+New strategy now in GitHub
+21/n
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+internal import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -108,7 +109,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("sets \(abcSets)")
         let abcCollections = AbcCollection.importFromJsonFile("collections")
         print("collections \(abcCollections)")
+        saveCollections(abcCollections)
     }
+    
+    func saveCollections(_ collections : [AbcCollection]) {
+        let context = AppDelegate.sharedDelegate.persistentContainer.newBackgroundContext()
+        for collection in collections {
+            if let theCollection = TDMCollection.makeInstance(from: collection, context: context) {
+                print("made collection: \(theCollection.displayName ?? "<no name>")")
+            } else {
+                print("bad collection")
+            }
+        }
+        do {
+            try context.save()
+        } catch {
+            print("can't save imported collections")
+        }
+    }
+    
     
     func setsBrowser()->UIViewController {
         let splitVC = UISplitViewController(style: .doubleColumn)

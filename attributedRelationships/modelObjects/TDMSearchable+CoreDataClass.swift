@@ -25,7 +25,7 @@ public class TDMSearchable: NSManagedObject {
                 
     }
     
-    class func makeInstance(from abcObj : some AbcCollectable, context :NSManagedObjectContext) -> TDMSearchable {
+    class func makeInstance(from abcObj : some AbcCollectable, context :NSManagedObjectContext) -> TDMSearchable? {
         var newInstance = self.makeInstance(context: context, displayName: abcObj.displayName, notes: abcObj.notes)
         //use the modified and created dateTime from the DTO
         newInstance.modifiedDateTime = abcObj.modifiedDateTime
