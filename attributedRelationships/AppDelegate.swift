@@ -11,7 +11,7 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var unitTesting = true
+    var unitTesting = false //true
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -68,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self._container?.viewContext.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
             }
         })
+        print("container path: \(_container?.persistentStoreDescriptions[0].url?.absoluteString ?? "<no url>")")
         return _container!
     }
     

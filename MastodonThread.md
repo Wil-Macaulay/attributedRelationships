@@ -468,3 +468,36 @@ I’m not going to try to figure out why my enum-with-associated-class didn't wo
 New strategy now in GitHub
 21/n
 
+t: #buildInPublic #CoreData #swiftTesting
+Since I can now create test JSON files, time to go on to something else: At the moment my import relies on completely denormalizing input files: if I have an import file with the same tune in 3 different sets I have to put the JSON representation 3 times into the import file.  I can solve this by using an ID for each tune and including it in the set instead. This also (eventually) lets me merge changes like changing the notes attached to each tune.
+22/n
+
+t: #buildInPublic #CoreData #swiftTesting
+
+I'll start a new thread for this.
+
+new thread at: https://mastodon.social/@Tom_frog/117258890795731424
+
+23/23
+
+## Thread 4 (Sept 12 2026)
+
+Starting a new thread for my #buildInPublic #iosDev where I’m trying to get cloud-syncing working using #CoreData and a data model that includes ordered many-to-many relationships - something that #cloudKit doesn't directly support.  
+previously:
+
+https://mastodon.social/@Tom_frog/116845888452256749
+
+start of first thread was at https://mastodon.social/@Tom_frog/115686636425331266
+
+I’m now at the fun part - converting from my current CoreData model to one that is CloudKit compatible.
+
+1/n
+
+t: #buildInPublic #iosDev #CoreData
+
+First: Modify CoreData schema to add an ID field.  Cases:
+- new local object. Use a UUID (Swift's implementation of RFC 4122) https://datatracker.ietf.org/doc/html/rfc4122
+- object created before UUIDs.  assign UUIDs on db conversion
+- object imported.  I'll use the imported ID, assuming it is consistent in the import file.  Duplicate detection has to handle remote objects created as semantic duplicates of existing ones, with different UUIDs.
+- other cases? we'll see 
+2/n
