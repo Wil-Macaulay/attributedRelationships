@@ -2,7 +2,7 @@
 //  TDMCollection+CoreDataProperties.swift
 //  attributedRelationships
 //
-//  Created by wil macaulay on 2025-12-14.
+//  Created by wil macaulay on 2026-09-13.
 //
 //
 
@@ -18,9 +18,10 @@ extension TDMCollection {
         return NSFetchRequest<TDMCollection>(entityName: "TDMCollection")
     }
 
-    @NSManaged public var displayName: String?
     @NSManaged public var createdDateTime: Date?
+    @NSManaged public var displayName: String?
     @NSManaged public var modifiedDateTime: Date?
+    @NSManaged public var uniqueId: String?
     @NSManaged public var items: NSOrderedSet?
 
 }
