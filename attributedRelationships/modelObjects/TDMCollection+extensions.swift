@@ -15,6 +15,7 @@ extension TDMCollection {
         newInstance.displayName = displayName
         newInstance.createdDateTime = now
         newInstance.modifiedDateTime = now
+        newInstance.uniqueId = UUID().uuidString
         return newInstance
     }
     

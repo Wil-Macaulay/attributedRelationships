@@ -24,6 +24,7 @@ public class TDMTune: TDMSearchable {
         //use the modified and created dateTime from the DTO
         newInstance.modifiedDateTime = abcObj.modifiedDateTime
         newInstance.createdDateTime = abcObj.createdDateTime
+        newInstance.uniqueId = abcObj.uniqueId
         return newInstance
         
     }

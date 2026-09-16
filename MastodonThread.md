@@ -522,6 +522,8 @@ create a new model version
 - not optional
 create a mapping model version to version
 
+this works on device or simulator but not for 'on my mac' presumably the database schema got changed somewhere along the way and I can't delete it
+
 
 
 
