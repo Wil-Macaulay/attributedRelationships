@@ -48,7 +48,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
         */
         print("persistentContainerForProd")
-       _container = NSPersistentContainer(name: "attributedRelationships")
+        // initialize (only during development)
+        //let cloudContainer = NSPersistentCloudKitContainer(name: "attributedRelationships")
+        let cloudContainer = NSPersistentContainer(name: "attributedRelationships")
+       _container = cloudContainer
+        
+        if let description = _container?.persistentStoreDescriptions.first {
+            description.shouldMigrateStoreAutomatically = true
+            description.shouldInferMappingModelAutomatically = false
+        }
+
         _container?.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -66,6 +75,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 self._container?.viewContext.automaticallyMergesChangesFromParent = true
                 self._container?.viewContext.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
+//#if DEBUG
+//                do {
+//                    try cloudContainer.initializeCloudKitSchema()
+//                    print("Initialized CloudKit Schema")
+//                } catch {
+//                    fatalError("can't initialize CloudKit Schema")
+//                }
+//#endif
+                
             }
         })
         print("container path: \(_container?.persistentStoreDescriptions[0].url?.absoluteString ?? "<no url>")")

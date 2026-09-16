@@ -14,6 +14,7 @@ public class AbcCollectable : Codable {
     let displayName: String?
     var modifiedDateTime: Date = .now
     var createdDateTime: Date = .now
+    var uniqueId: String
     
     enum CollectableCodingKeys : String, CodingKey {
         case displayName
@@ -22,6 +23,7 @@ public class AbcCollectable : Codable {
         case modifiedDateTime
         case items
         case itemType
+        case uniqueId
     }
     
     required public init(from decoder: any Decoder) throws {
@@ -32,6 +34,9 @@ public class AbcCollectable : Codable {
         modifiedDateTime = try container.decodeIfPresent(Date.self, forKey: .modifiedDateTime) ?? .now
         items = try container.decodeIfPresent([AbcCollectable].self, forKey: .items)
         itemType = try container.decode(String.self, forKey: .itemType)
+        uniqueId = try container.decodeIfPresent(String.self, forKey: .uniqueId) ?? UUID().uuidString
     }
+    
+    
 }
 

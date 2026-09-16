@@ -501,3 +501,27 @@ First: Modify CoreData schema to add an ID field.  Cases:
 - object imported.  I'll use the imported ID, assuming it is consistent in the import file.  Duplicate detection has to handle remote objects created as semantic duplicates of existing ones, with different UUIDs.
 - other cases? we'll see 
 2/n
+
+https://developer.apple.com/documentation/coredata/setting-up-core-data-with-cloudkit#Update-an-existing-Xcode-project
+
+Apple docs don't say ordered relationships are not supported, but get an error if you still have them.
+
+Have to call initializeCloudKitSchema AFTER loadPersistentStores
+
+- add persistentID - use a String instead of a UUID in the schema to simplify testing
+- will add it to the superclass Searchable and also to Collection
+- 
+
+https://9elements.com/blog/customizing-core-data-migrations/
+
+https://www.polpiella.dev/custom-core-data-migrations/
+
+create a new model version
+- add uniqueID field to TDMCollection and TDMSearchable
+- String
+- not optional
+create a mapping model version to version
+
+
+
+

@@ -21,6 +21,8 @@ public class TDMSearchable: NSManagedObject {
         newInstance.createdDateTime = now
         newInstance.modifiedDateTime = now
         newInstance.collatingName = collatingName(displayName: displayName)
+        newInstance.uniqueId = UUID().uuidString
+
         return newInstance
                 
     }
@@ -30,6 +32,7 @@ public class TDMSearchable: NSManagedObject {
         //use the modified and created dateTime from the DTO
         newInstance.modifiedDateTime = abcObj.modifiedDateTime
         newInstance.createdDateTime = abcObj.createdDateTime
+        newInstance.uniqueId = abcObj.uniqueId
         return newInstance
         
     }

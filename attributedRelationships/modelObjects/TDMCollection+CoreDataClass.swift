@@ -20,6 +20,7 @@ public class TDMCollection: NSManagedObject {
         newInstance.displayName = displayName
         newInstance.createdDateTime = now
         newInstance.modifiedDateTime = now
+        newInstance.uniqueId = UUID().uuidString
         return newInstance
                 
     }
@@ -29,10 +30,12 @@ public class TDMCollection: NSManagedObject {
         guard abcObj.itemType == "collection" else {
             return nil
         }
-        var newInstance = self.makeInstance(context: context, displayName: abcObj.displayName, notes: abcObj.notes)
+        let newInstance = self.makeInstance(context: context, displayName: abcObj.displayName, notes: abcObj.notes)
         //use the modified and created dateTime from the DTO
         newInstance.modifiedDateTime = abcObj.modifiedDateTime
         newInstance.createdDateTime = abcObj.createdDateTime
+        newInstance.uniqueId = abcObj.uniqueId
+
         if let items = abcObj.items{
             for item in items {
                 if let theTune = TDMTune.makeInstance(from: item, context: context) {
