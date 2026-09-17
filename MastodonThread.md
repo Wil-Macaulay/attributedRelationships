@@ -518,6 +518,13 @@ https://github.com/Wil-Macaulay/attributedRelationships
 4/n
 
 
+t: #buildInPublic #iosDev #CoreData
+
+Now I'm adding the intermediate relationship objects TDMSearchable_Collection and TDMTune_TuneSet to the schema
+I’m going to have to include an explicit ordering attribute so I can order the retrieved objects in the UI. 
+I’ve got it working, but I still haven't handled removing the link objects when deleting the objects they point to. That’s next time!
+5/n
+
 https://developer.apple.com/documentation/coredata/setting-up-core-data-with-cloudkit#Update-an-existing-Xcode-project
 
 Apple docs don't say ordered relationships are not supported, but get an error if you still have them.
