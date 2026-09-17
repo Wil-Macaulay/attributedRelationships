@@ -35,6 +35,7 @@
 				modelObjects/AbcCollection.swift,
 				modelObjects/AbcTune.swift,
 				modelObjects/AbcTuneSet.swift,
+				modelObjects/V1_v2.xcmappingmodel,
 			);
 			target = 3B2F4C272F0202B400C6A975 /* attributedRelationshipsTests */;
 		};

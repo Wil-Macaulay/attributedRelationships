@@ -2,7 +2,7 @@
 //  TDMTune+CoreDataProperties.swift
 //  attributedRelationships
 //
-//  Created by wil macaulay on 2025-12-14.
+//  Created by wil macaulay on 2026-09-17.
 //
 //
 
@@ -26,10 +26,10 @@ extension TDMTune {
 extension TDMTune {
 
     @objc(addTuneSetsObject:)
-    @NSManaged public func addToTuneSets(_ value: TDMTuneSet)
+    @NSManaged public func addToTuneSets(_ value: TDMTune_TuneSet)
 
     @objc(removeTuneSetsObject:)
-    @NSManaged public func removeFromTuneSets(_ value: TDMTuneSet)
+    @NSManaged public func removeFromTuneSets(_ value: TDMTune_TuneSet)
 
     @objc(addTuneSets:)
     @NSManaged public func addToTuneSets(_ values: NSSet)

@@ -85,23 +85,19 @@ class TuneSetViewController: UIViewController, ItemChooserDelegate {
                 subview.removeFromSuperview()
             }
         }
-
+        
         if let detailItem {
             title = "Set: " + (detailItem.displayName ?? "<untitled>")
             displayNameField.text = detailItem.displayName
             notesField.text = detailItem.notes
             createdField.text = detailItem.createdDateTime?.formatted()
             modifiedField.text = detailItem.modifiedDateTime?.formatted()
-            if let tunes = detailItem.tunes {
-                for tune in tunes {
-                    if let tune = tune as? TDMTune {
-                        let tuneLabel = UILabel()
-                        tuneLabel.text = tune.displayName
-                        tunesStackView.addArrangedSubview(tuneLabel)
-                    }
-                }
+            let tunes = detailItem.getTunes()
+            for tune in tunes {
+                let tuneLabel = UILabel()
+                tuneLabel.text = tune.displayName
+                tunesStackView.addArrangedSubview(tuneLabel)
             }
-
         }
     }
     
@@ -122,7 +118,7 @@ class TuneSetViewController: UIViewController, ItemChooserDelegate {
     func didSelect(_ item: TDMSearchable) {
         print("item selected from chooser")
         if let item = item as? TDMTune {
-            detailItem?.addToTunes(item)
+            detailItem?.addTune(item)
             detailItem?.modifiedDateTime = Date()
             do {
                 try context.save()

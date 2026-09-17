@@ -2,7 +2,7 @@
 //  TDMSearchable+CoreDataProperties.swift
 //  attributedRelationships
 //
-//  Created by wil macaulay on 2026-09-13.
+//  Created by wil macaulay on 2026-09-17.
 //
 //
 
@@ -25,7 +25,7 @@ extension TDMSearchable {
     @NSManaged public var modifiedDateTime: Date?
     @NSManaged public var notes: String?
     @NSManaged public var uniqueId: String?
-    @NSManaged public var collections: TDMCollection?
+    @NSManaged public var collections: TDMSearchable_Collection?
 
 }
 

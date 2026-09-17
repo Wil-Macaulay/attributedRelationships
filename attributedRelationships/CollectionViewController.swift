@@ -116,7 +116,7 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "collectionTuneCell", for: indexPath)
         // Configure the cell...
         if let detailItem,
-           let item = detailItem.items?[indexPath.row] as? TDMSearchable,
+           let item = detailItem.getSearchableItem(at: indexPath.row),
            let itemName = item.displayName {
             cell.textLabel?.text = itemName
         } else {
@@ -130,7 +130,7 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          if let detailItem {
-           let item = detailItem.items?[indexPath.row]
+             let item = detailItem.getSearchableItem(at: indexPath.row)
             if let item = item as? TDMTune {
                 showTuneVC(item: item)
             } else {
@@ -164,7 +164,7 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
         if editingStyle == .delete {
             // Delete the row from the data source
             if let detailItem {
-                detailItem.removeFromItems(at: indexPath.row)
+                detailItem.removeSearchableItem(at: indexPath.row)
                 detailItem.modifiedDateTime = Date()
                 let context = AppDelegate.sharedDelegate.persistentContainer.viewContext
                 do {
@@ -183,10 +183,8 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
     
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        if let detailItem,
-           let item =  detailItem.items?.object(at: fromIndexPath.row) as? TDMSearchable {
-            detailItem.removeFromItems(at: fromIndexPath.row)
-            detailItem.insertIntoItems(item, at: to.row)
+        if let detailItem{
+            detailItem.swapSearchableItem(from: fromIndexPath.row, to: to.row)
             tableView.reloadData()
         }
 
@@ -197,7 +195,7 @@ class CollectionViewController: UITableViewController, ItemChooserDelegate {
     func didSelect(_ item: TDMSearchable) {
         print("item selected from chooser")
         
-        detailItem?.addToItems(item)
+        detailItem?.addSearchableItem(item)
         detailItem?.modifiedDateTime = Date()
         do {
             try context.save()

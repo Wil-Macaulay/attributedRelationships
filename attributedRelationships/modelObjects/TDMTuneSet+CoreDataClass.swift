@@ -28,7 +28,7 @@ public class TDMTuneSet: TDMSearchable {
         if let items = abcObj.items{
             for item in items {
                 if let theTune = TDMTune.makeInstance(from: item, context: context) {
-                    newInstance.addToTunes(theTune)
+                    newInstance.addTune(theTune)
                 }
             }
         }

@@ -39,9 +39,9 @@ public class TDMCollection: NSManagedObject {
         if let items = abcObj.items{
             for item in items {
                 if let theTune = TDMTune.makeInstance(from: item, context: context) {
-                    newInstance.addToItems(theTune)
+                    newInstance.addSearchableItem(theTune)
                 } else if let theTuneSet = TDMTuneSet.makeInstance(from: item, context: context) {
-                    newInstance.addToItems(theTuneSet)
+                    newInstance.addSearchableItem(theTuneSet)
                 }
             }
         }

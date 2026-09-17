@@ -2,7 +2,7 @@
 //  TDMCollection+CoreDataProperties.swift
 //  attributedRelationships
 //
-//  Created by wil macaulay on 2026-09-13.
+//  Created by wil macaulay on 2026-09-17.
 //
 //
 
@@ -22,42 +22,24 @@ extension TDMCollection {
     @NSManaged public var displayName: String?
     @NSManaged public var modifiedDateTime: Date?
     @NSManaged public var uniqueId: String?
-    @NSManaged public var items: NSOrderedSet?
+    @NSManaged public var items: NSSet?
 
 }
 
 // MARK: Generated accessors for items
 extension TDMCollection {
 
-    @objc(insertObject:inItemsAtIndex:)
-    @NSManaged public func insertIntoItems(_ value: TDMSearchable, at idx: Int)
-
-    @objc(removeObjectFromItemsAtIndex:)
-    @NSManaged public func removeFromItems(at idx: Int)
-
-    @objc(insertItems:atIndexes:)
-    @NSManaged public func insertIntoItems(_ values: [TDMSearchable], at indexes: NSIndexSet)
-
-    @objc(removeItemsAtIndexes:)
-    @NSManaged public func removeFromItems(at indexes: NSIndexSet)
-
-    @objc(replaceObjectInItemsAtIndex:withObject:)
-    @NSManaged public func replaceItems(at idx: Int, with value: TDMSearchable)
-
-    @objc(replaceItemsAtIndexes:withItems:)
-    @NSManaged public func replaceItems(at indexes: NSIndexSet, with values: [TDMSearchable])
-
     @objc(addItemsObject:)
-    @NSManaged public func addToItems(_ value: TDMSearchable)
+    @NSManaged public func addToItems(_ value: TDMSearchable_Collection)
 
     @objc(removeItemsObject:)
-    @NSManaged public func removeFromItems(_ value: TDMSearchable)
+    @NSManaged public func removeFromItems(_ value: TDMSearchable_Collection)
 
     @objc(addItems:)
-    @NSManaged public func addToItems(_ values: NSOrderedSet)
+    @NSManaged public func addToItems(_ values: NSSet)
 
     @objc(removeItems:)
-    @NSManaged public func removeFromItems(_ values: NSOrderedSet)
+    @NSManaged public func removeFromItems(_ values: NSSet)
 
 }
 

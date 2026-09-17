@@ -502,6 +502,22 @@ First: Modify CoreData schema to add an ID field.  Cases:
 - other cases? we'll see 
 2/n
 
+t: #buildInPublic #iosDev #CoreData
+
+Starting out by getting comfortable with lightweight migrations - this was helpful https://www.polpiella.dev/custom-core-data-migrations/
+- just adding a uniqueId field to start with, with a custom policy to add a string from a UUID().
+- went in circles for a bit tracking down ‘can't find mapping model for migration' - I must have been playing with the schema trying to get CloudKit to accept it. Once I deleted the database and reinstalled the old version from scratch it worked fine. 
+3/n
+
+t: #buildInPublic #iosDev #CoreData
+
+new commit in GitHub
+
+https://github.com/Wil-Macaulay/attributedRelationships
+
+4/n
+
+
 https://developer.apple.com/documentation/coredata/setting-up-core-data-with-cloudkit#Update-an-existing-Xcode-project
 
 Apple docs don't say ordered relationships are not supported, but get an error if you still have them.
